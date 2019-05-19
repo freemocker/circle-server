@@ -1,0 +1,36 @@
+
+spring:
+  profiles:
+    active: prod
+  servlet:
+    multipart:
+      max-file-size: 150MB
+      max-request-size: 150MB
+      enabled: true
+  mvc:
+    async:
+      request-timeout: 20000
+
+server:
+  port: ${myserver.port}
+  servlet:
+    context-path: /
+
+logging:
+  config: classpath:logback-spring.xml
+
+# Bean生成器配置
+gen-config:
+  # 普通bean
+  normal_package_name: com.ubatis.circleserver.bean
+  normal_extend_class:
+  normal_prefix:
+  normal_suffix: Bean
+  normal_out_dir: src/main/java/com/ubatis/circleserver/bean
+  # 参数的
+  param_package_name: com.ubatis.circleserver.bean.param
+  param_extend_class: com.ubatis.circleserver.bean.basic.MyParams
+  param_prefix: Param
+  param_suffix:
+  param_out_dir: src/main/java/com/ubatis/circleserver/bean/param
+

@@ -1,0 +1,51 @@
+
+/*rewrite icon begins*/
+.ztree li span.button{
+	background-size: 12px;
+	width: 16px;height: 16px;
+}
+.ztree li span.button.switch{
+	width: 16px;
+    height: 16px;
+}
+.ztree li span.button.noline_close{
+    background-position: 0;
+	background-image: url('./img/right.png');
+}
+.ztree li span.button.noline_open{
+    background-position: 0;
+	background-image: url('./img/down.png');
+	background-size: 16px;
+}
+/*md_icon*/
+.ztree li span.button.ico_docu{
+	background-position: 0;
+	background-image: url('./img/markdown.png');
+	background-size: 14px;
+}
+/*rewrite icon ends*/
+html,body{
+	margin: 0;padding: 0;
+}
+#app{
+	height: 100%;
+}
+.tree{
+	width: 300px;
+	overflow: scroll;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #efefef;
+	padding:10px;
+}
+.show{
+	position: absolute;
+	/*width: calc(100% - 330px);*/
+	width: calc(100% - 330px);
+	overflow:auto;
+	top: 0px;
+	right: 0px;
+}
+.table{
+	width: 80% !important;
+}

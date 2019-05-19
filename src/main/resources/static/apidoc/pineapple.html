@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="css/doc.css" type="text/css">
+    <link href="https://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.ztree.core.min.js"></script>
+    <script src="js/jQuery.md5.js"></script>
+    <script src="https://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="js/marked.js"></script>
+    <title>项目文档</title>
+
+    <script>
+
+        var URL = '//' + window.location.host + '/doc/api';
+        var ERR_OK = 0;
+        var DOC_KEY = "DOC_KEY";
+
+        function init(){
+            var sendData = {
+                key: window.localStorage.getItem(DOC_KEY)
+            };
+            $.ajax({
+                url: URL,
+                method: 'GET',
+                data: sendData,
+                success:function(data) {
+                    console.log(data);
+                    if (data.code != ERR_OK) {
+                        // alert(data.info)
+                        return $('#myModal').modal('show')
+                    }
+                    $('#myModal').modal('hide')
+                    var setting = {
+                        view: {
+                            showIcon: showIconForTree,
+                            showLine: false
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        callback: {
+                            onClick: onClick
+                        }
+                    };
+                    var zNodes =[];
+                    if(data.code === ERR_OK)
+                        zNodes = deepSearchForJson(data.data);
+                    // console.log(zNodes);
+                    $.fn.zTree.init($("#tree"), setting, zNodes);
+                    var treeObj = $.fn.zTree.getZTreeObj("tree");
+                    //恢复状态。取出来的是文档的路径
+                    var path = window.location.hash
+                    if(path){
+                        path = path.substr(1)
+                        //遍历所有节点，然后根据路径，找到节点的id
+                        var nodes = treeObj.getNodes();
+                        getTargetNodeId(path, nodes, function (tId) {
+                            var node = treeObj.getNodeByTId(tId);
+                            treeObj.selectNode(node);
+                            if (node && !node.diretory) {
+                                var md_content = node.value;
+                                var html_content = marked( md_content );
+                                $('.show').html(html_content);
+                            }
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+
+        }
+        // 根据json深度搜索
+        function deepSearchForJson(jsonArr){
+            var resultArr = [];
+            for (var i =0;i<= jsonArr.length - 1;i++) {
+                var item = jsonArr[i];
+                var jsonItem={};
+                jsonItem['name'] = item.name;
+                jsonItem['diretory'] = item.diretory;
+                jsonItem['value'] = item.value;
+                jsonItem['parent'] = item.parent;
+                if(item.diretory)
+                    jsonItem['children'] = deepSearchForJson(item.mdList);
+                resultArr.push(jsonItem);
+            }
+            return resultArr;
+        }
+        //返回目标节点的id
+        function getTargetNodeId(path, nodes, cb) {
+            for(var x in nodes){
+                var item = nodes[x]
+                if(item.diretory){
+                    getTargetNodeId(path, item.children, cb)
+                }else {
+                    var fullname = item.parent + '/' + item.name
+                    if($.md5(fullname).trim() === path.trim()){
+                        cb(item.tId);
+                        break;
+                    }
+                }
+            }
+        }
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent;
+        }
+        function onClick(event, treeId, treeNode, clickFlag) {
+            if (!treeNode.diretory) {
+                var md_content = treeNode.value;
+                var html_content = marked( md_content );
+                // console.log(html_content);
+                $('.show').html(html_content);
+            }else{
+                var arrNode = $(event.target).parents('a').siblings('.switch');
+                arrNode.trigger('click');
+            }
+            //把节点的父路径和子节点名字合起来作为一个id
+            window.location.hash = $.md5(treeNode.parent + '/' + treeNode.name)
+        }
+        init()
+
+        function startValid() {
+            window.localStorage.setItem(DOC_KEY, $('#key').val().trim());
+            init()
+        }
+
+    </script>
+</head>
+<body>
+
+<div id="app">
+    <!-- tree -->
+    <div class="tree">
+        <ul class="ztree" id="tree">
+        </ul>
+    </div>
+    <div class="show"></div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    身份验证
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="key" placeholder="查看密码">
+                        </div>
+                        <button onclick="startValid()" class="btn btn-primary">确认</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+    $('.tree').height($(window).height() - 20)
+    $('.show').height($(window).height())
+</script>
+
+</html>
