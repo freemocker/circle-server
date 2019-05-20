@@ -28,6 +28,7 @@ HELP.md
 ### VS Code ###
 .vscode/
 
+/logs/
 
 ### opensource ###
 /src/main/resources/application-prod.yml
