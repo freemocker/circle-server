@@ -20,6 +20,7 @@ public class SysConfig {
     private String oss_accesskey_id;
     private String oss_accesskey_secret;
     private String oss_bucket_name;
+    private int web_socket_port;
 
     public boolean isDebug() {
         return debug;
@@ -100,4 +101,13 @@ public class SysConfig {
     public void setOss_bucket_name(String oss_bucket_name) {
         this.oss_bucket_name = oss_bucket_name;
     }
+
+    public int getWeb_socket_port() {
+        return web_socket_port;
+    }
+
+    public void setWeb_socket_port(int web_socket_port) {
+        this.web_socket_port = web_socket_port;
+    }
+
 }

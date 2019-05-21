@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.modules.schedule;
+package com.ubatis.circleserver.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
