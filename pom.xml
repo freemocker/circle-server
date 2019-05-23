@@ -97,11 +97,11 @@
             <version>3.3.87.ALL</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+        <!--IM-->
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.36.Final</version>
+            <groupId>org.yeauty</groupId>
+            <artifactId>netty-websocket-spring-boot-starter</artifactId>
+            <version>0.8.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
@@ -115,20 +115,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
-        </dependency>
-
-        <!--t-io-->
-        <!-- https://mvnrepository.com/artifact/org.t-io/tio-core -->
-        <dependency>
-            <groupId>org.t-io</groupId>
-            <artifactId>tio-core</artifactId>
-            <version>3.1.7.v20180815-RELEASE</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.t-io/tio-websocket-server -->
-        <dependency>
-            <groupId>org.t-io</groupId>
-            <artifactId>tio-websocket-server</artifactId>
-            <version>3.1.7.v20180815-RELEASE</version>
         </dependency>
 
         <!--Kotlin-->
