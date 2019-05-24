@@ -1,0 +1,205 @@
+{
+    "root": {
+        "data": {
+            "id": "b7a58c58a8ed",
+            "created": 1558658247,
+            "text": "小圈"
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "bub6bv0iz8w0",
+                    "created": 1558658511167,
+                    "text": "UI布局"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "bub6cj03ylk0",
+                            "created": 1558658563385,
+                            "text": "首页"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "bub6d5ls42o0",
+                                    "created": 1558658612584,
+                                    "text": "拼车"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6d93q3ds0",
+                                    "created": 1558658620200,
+                                    "text": "共享车位"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6ddih31s0",
+                                    "created": 1558658629799,
+                                    "text": "楼巴信息"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6disrqyg0",
+                                    "created": 1558658641305,
+                                    "text": "物业通知"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "bub6cr4jr7s0",
+                            "created": 1558658581067,
+                            "text": "邻里圈"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "bub6dqila2o0",
+                                    "created": 1558658658104,
+                                    "text": "发帖"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6dtkk5fc0",
+                                    "created": 1558658664753,
+                                    "text": "活动"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "bub6cztp5ds0",
+                            "created": 1558658600002,
+                            "text": "我的"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "bub6dxhyo800",
+                                    "created": 1558658673303,
+                                    "text": "个人资料"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "bub6egcm7e80",
+                                            "created": 1558658714339,
+                                            "text": "审核认证"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6dzaoe1s0",
+                                    "created": 1558658677216,
+                                    "text": "通知豆获取"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6e4o7x140",
+                                    "created": 1558658688919,
+                                    "text": "设置"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6ep1fylc0",
+                                    "created": 1558658733254,
+                                    "text": "帖子历史"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "bub6espbc9s0",
+                                            "created": 1558658741228,
+                                            "text": "看过的"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "bub6euaves00",
+                                            "created": 1558658744708,
+                                            "text": "点赞过的"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "bub6ewduqzs0",
+                                            "created": 1558658749242,
+                                            "text": "互动过的"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "bub6f43axew0",
+                                    "created": 1558658766018,
+                                    "text": "消息通知"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "bub6f70i9ps0",
+                                            "created": 1558658772380,
+                                            "text": "系统消息"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "bub6f8kc3iw0",
+                                            "created": 1558658775755,
+                                            "text": "帖子回复通知"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "bub6fg9wmd40",
+                    "created": 1558658792539,
+                    "text": "拼车"
+                },
+                "children": []
+            },
+            {
+                "data": {
+                    "id": "bub6fr3qe0g0",
+                    "created": 1558658816110,
+                    "text": "车位共享"
+                },
+                "children": []
+            }
+        ]
+    },
+    "template": "default",
+    "theme": "fresh-blue",
+    "version": "1.4.43"
+}
