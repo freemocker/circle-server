@@ -20,4 +20,10 @@ public class GenUtil {
         }
         return firstLetterUpperCase(sb.toString());
 	}
+
+    // 首字母大写驼峰
+    public static String genderateGetterSetterMethod(String filedName) {
+        return toCamelName(firstLetterUpperCase(filedName));
+    }
+
 }
