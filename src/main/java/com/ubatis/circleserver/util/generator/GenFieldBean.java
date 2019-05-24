@@ -48,7 +48,7 @@ public class GenFieldBean {
 
 	public String genGetter(){
 		StringBuilder getter = new StringBuilder();
-		getter.append("    public "+getType()+" "+"get"+ GenUtil.genderateGetterSetterMethod(getName())+"() { ").append("\n");
+		getter.append("    public "+getType()+" "+"get"+ GenUtil.firstLetterUpperCase(getName())+"() { ").append("\n");
 		getter.append("        return "+getName()).append(";").append("\n");
 		getter.append("    }");
 		return getter.toString();
@@ -56,7 +56,7 @@ public class GenFieldBean {
 	
 	public String genSetter(GenConfig genConfig){
 		StringBuilder getter = new StringBuilder();
-		getter.append("    public void "+"set"+ GenUtil.genderateGetterSetterMethod(getName())+"("+getType()+" "+getName()+") { ").append("\n");
+		getter.append("    public void "+"set"+ GenUtil.firstLetterUpperCase(getName())+"("+getType()+" "+getName()+") { ").append("\n");
 		if(!genConfig.isNormal()){
 			getter.append("        put(\""+getName()+"\","+getName()+")").append(";").append("\n");	
 		}
