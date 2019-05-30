@@ -1,13 +1,16 @@
 package com.ubatis.circleserver.util.generator;
 
 import com.ubatis.circleserver.config.GeneratorConfig;
+import com.ubatis.circleserver.util.JsonUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GenMain {
 
@@ -16,6 +19,8 @@ public class GenMain {
 	private static String JDBC_USERNAME;
 	private static String JDBC_PASSWORD;
 	private static String DATABASE_NAME;
+	private static String tableNamePackage;
+	private static String tableNamePath;
 
 	// 数据库连接
 	private static Connection mConn = null;
@@ -56,36 +61,38 @@ public class GenMain {
 
 	}
 
-	public static String[] getAllTables() throws Exception {
-		DatabaseMetaData databaseMetaData = getConnection().getMetaData();
-		String[] types = { "TABLE", "VIEW" };
-		ResultSet tables = databaseMetaData.getTables(null, null, "%", types);
-		ArrayList<String> tablesList = new ArrayList<String>();
-		while (tables.next()) {
-			System.out.println(tables.getString("TABLE_NAME"));
-			tablesList.add(tables.getString("TABLE_NAME"));
+	public static List<Map<String, Object>> getAllTables() throws Exception {
+		List<Map<String, Object>> tableNameList = new ArrayList<>();
+		Statement statement = getConnection().createStatement();
+		ResultSet resultSet = null;
+		resultSet = statement.executeQuery(" SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES WHERE table_schema='"+DATABASE_NAME+"' ");
+		ResultSetMetaData md = resultSet.getMetaData();
+		while (resultSet.next()) {
+			Map rowData = new HashMap();
+			for (int i = 1; i <= md.getColumnCount(); i++) {
+				rowData.put(md.getColumnName(i), resultSet.getObject(i));
+			}
+			// System.out.println("表："+rowData.get("TABLE_NAME") + " - " + rowData.get("TABLE_COMMENT"));
+			tableNameList.add(rowData);
 		}
-
-		System.out.println("一共有 "+ tablesList.size() + " 张表");
-		return tablesList.toArray(new String[tablesList.size()]);
+		System.out.println(JsonUtil.toJson(tableNameList));
+		return tableNameList;
 	}
 
 	// 获取字段
 	public static void start(GenConfig genConfig) {
 
 		try {
-			String[] tables = getAllTables();
-			ArrayList<String> existTables = new ArrayList<>();
+			List<Map<String, Object>> tables = getAllTables();
 			//
-			for (String tablename : tables) {
+			for (Map<String, Object> tableMap : tables) {
 				List<GenFieldBean> fieldList = new ArrayList<>();// 一个表的
 				Statement statement = getConnection().createStatement();
 				ResultSet resultSet = null;
 				try {
-					resultSet = statement.executeQuery("SELECT * from " + tablename + " LIMIT 1 ");
-					existTables.add(tablename);
+					resultSet = statement.executeQuery("SELECT * from " + tableMap.get("TABLE_NAME") + " LIMIT 1 ");
 				} catch (SQLSyntaxErrorException e) {
-					System.out.println(tablename + "不存在");
+					System.out.println(tableMap + "不存在");
 					continue;
 				}
 				ResultSetMetaData metaData = resultSet.getMetaData();
@@ -98,11 +105,11 @@ public class GenMain {
 					fieldList.add(fieldBean);
 				}
 				// 获取一个表
-				genClassFiles(genConfig, tablename, fieldList);
+				genClassFiles(genConfig, tableMap.get("TABLE_NAME").toString(), fieldList);
 			}
 			if (genConfig.isNormal()) {
 				// 生成TableName
-				genTableName(genConfig, existTables.toArray());
+				genTableName(tables);
 			}
 		} catch (Exception e) {
 			System.out.println("出错");
@@ -178,20 +185,21 @@ public class GenMain {
 		writeFile(genConfig.getOutDir(), className, ret.toString());
 	}
 
-	public static void genTableName(GenConfig genConfig, Object[] tableNameList) {
+	public static void genTableName(List<Map<String, Object>> tableNameList) {
 		StringBuilder ret = new StringBuilder();
-		ret.append("package ").append(genConfig.getTablename_package()).append(";").append("\n").append("\n");
+		ret.append("package ").append(tableNamePackage).append(";").append("\n").append("\n");
 		ret.append("\n");
 		ret.append("public class TableName {");
 		ret.append("\n");
 		ret.append("\n");
-		for (Object tableName : tableNameList) {
-			ret.append("    public static final String " + tableName.toString().toUpperCase() + " = \"" + tableName + "\";").append("\n");
+		for (Map tableNameMap : tableNameList) {
+			ret.append("    /** " + tableNameMap.get("TABLE_COMMENT") +" */").append("\n");
+			ret.append("    public static final String " + tableNameMap.get("TABLE_NAME").toString().toUpperCase() + " = \"" + tableNameMap.get("TABLE_NAME") + "\";").append("\n");
 		}
 		ret.append("\n");
 		ret.append("}");
 		// System.out.println(ret.toString());
-		writeFile(genConfig.getTablename_path(), "TableName", ret.toString());
+		writeFile(tableNamePath, "TableName", ret.toString());
 	}
 
 	public static void writeFile(String output, String className, String content) {
@@ -214,13 +222,16 @@ public class GenMain {
 		}
 	}
 
-	public static void init(String jdbc_driver, String jdbc_url, String jdbc_username, String jdbc_password,String database_name) {
+	public static void initAndStart(String jdbc_driver, String jdbc_url, String jdbc_username, String jdbc_password,String database_name, GeneratorConfig generatorConfig) {
 		// 初始化配置
 		JDBC_DRIVER = jdbc_driver;
 		JDBC_URL = jdbc_url;
 		JDBC_USERNAME = jdbc_username;
 		JDBC_PASSWORD = jdbc_password;
 		DATABASE_NAME = database_name;
+		tableNamePackage = generatorConfig.getTablename_package();
+		tableNamePath = generatorConfig.getTablename_path();
+		refreshBeans(generatorConfig);
 	}
 
 	/**
@@ -234,18 +245,14 @@ public class GenMain {
 				, generatorConfig.getNormal_extend_class()
 				, generatorConfig.getNormal_prefix()
 				, generatorConfig.getNormal_suffix()
-				, generatorConfig.getNormal_out_dir()
-				, generatorConfig.getTablename_package()
-				, generatorConfig.getTablename_path());
+				, generatorConfig.getNormal_out_dir());
 
 		GenConfig genConfigParams = new GenConfig(false
 				, generatorConfig.getParam_package_name()
 				, generatorConfig.getParam_extend_class()
 				, generatorConfig.getParam_prefix()
 				, generatorConfig.getParam_suffix()
-				, generatorConfig.getParam_out_dir()
-				, generatorConfig.getTablename_package()
-				, generatorConfig.getTablename_path());
+				, generatorConfig.getParam_out_dir());
 
 		start(genConfigNormal);
 		start(genConfigParams);

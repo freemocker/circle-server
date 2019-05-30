@@ -45,8 +45,7 @@ public class BeanGenerator {
      */
     @Test
     public void refreshBeans(){
-        GenMain.init(jdbc_driver, jdbc_url, jdbc_username, jdbc_password, database_name);
-        GenMain.refreshBeans(generatorConfig);
+        GenMain.initAndStart(jdbc_driver, jdbc_url, jdbc_username, jdbc_password, database_name, generatorConfig);
     }
 
 }
