@@ -75,6 +75,7 @@ public class GenMain {
 
 		try {
 			String[] tables = getAllTables();
+			ArrayList<String> existTables = new ArrayList<>();
 			//
 			for (String tablename : tables) {
 				List<GenFieldBean> fieldList = new ArrayList<>();// 一个表的
@@ -82,6 +83,7 @@ public class GenMain {
 				ResultSet resultSet = null;
 				try {
 					resultSet = statement.executeQuery("SELECT * from " + tablename + " LIMIT 1 ");
+					existTables.add(tablename);
 				} catch (SQLSyntaxErrorException e) {
 					System.out.println(tablename + "不存在");
 					continue;
@@ -97,6 +99,10 @@ public class GenMain {
 				}
 				// 获取一个表
 				genClassFiles(genConfig, tablename, fieldList);
+			}
+			if (genConfig.isNormal()) {
+				// 生成TableName
+				genTableName(genConfig, existTables.toArray());
 			}
 		} catch (Exception e) {
 			System.out.println("出错");
@@ -169,12 +175,27 @@ public class GenMain {
 		ret.append("\n");
 		ret.append("}");
 		// System.out.println(ret.toString());
-		writeFile(genConfig, className, ret.toString());
+		writeFile(genConfig.getOutDir(), className, ret.toString());
 	}
 
-	public static void writeFile(GenConfig genConfig, String className, String content) {
+	public static void genTableName(GenConfig genConfig, Object[] tableNameList) {
+		StringBuilder ret = new StringBuilder();
+		ret.append("package ").append(genConfig.getTablename_package()).append(";").append("\n").append("\n");
+		ret.append("\n");
+		ret.append("public class TableName {");
+		ret.append("\n");
+		ret.append("\n");
+		for (Object tableName : tableNameList) {
+			ret.append("    public static final String " + tableName.toString().toUpperCase() + " = \"" + tableName + "\";").append("\n");
+		}
+		ret.append("\n");
+		ret.append("}");
+		// System.out.println(ret.toString());
+		writeFile(genConfig.getTablename_path(), "TableName", ret.toString());
+	}
+
+	public static void writeFile(String output, String className, String content) {
 		try {
-			String output = genConfig.getOutDir();
 			if (output == null || output.equals("")) {
 				output = "gens";
 			}
@@ -213,14 +234,18 @@ public class GenMain {
 				, generatorConfig.getNormal_extend_class()
 				, generatorConfig.getNormal_prefix()
 				, generatorConfig.getNormal_suffix()
-				, generatorConfig.getNormal_out_dir());
+				, generatorConfig.getNormal_out_dir()
+				, generatorConfig.getTablename_package()
+				, generatorConfig.getTablename_path());
 
 		GenConfig genConfigParams = new GenConfig(false
 				, generatorConfig.getParam_package_name()
 				, generatorConfig.getParam_extend_class()
 				, generatorConfig.getParam_prefix()
 				, generatorConfig.getParam_suffix()
-				, generatorConfig.getParam_out_dir());
+				, generatorConfig.getParam_out_dir()
+				, generatorConfig.getTablename_package()
+				, generatorConfig.getTablename_path());
 
 		start(genConfigNormal);
 		start(genConfigParams);

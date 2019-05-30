@@ -33,4 +33,7 @@ gen-config:
   param_prefix: Param
   param_suffix:
   param_out_dir: src/main/java/com/ubatis/circleserver/bean/param
+  # TableName.java 路径
+  tablename_package: com.ubatis.circleserver.util.common
+  tablename_path: src/main/java/com/ubatis/circleserver/util/common
 
