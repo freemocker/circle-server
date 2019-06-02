@@ -1,13 +1,12 @@
 package com.ubatis.circleserver.util.daoutils;
 
 import com.ubatis.circleserver.bean.basic.Page;
-import com.ubatis.circleserver.exception.MyException;
-import com.ubatis.circleserver.util.common.CS;
+import com.ubatis.circleserver.util.TwitterIDGenerator;
 import com.zaxxer.hikari.HikariDataSource;
-import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -20,14 +19,13 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * mysql专用分页
  * spring jdbc temperate
- * //map to object
- * //List<UserBean> userlist = JsonParser.getListFromHashMapList(dataPage.getPageDatas(), UserBean[].class);
- *
- * @param <T> get返回对象。用Gson
+ * ref: https://blog.csdn.net/u011179993/article/details/74791304
  */
 public class BaseDao<T> {
+
+    @Autowired
+    private TwitterIDGenerator twitterIDGenerator;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -50,11 +48,8 @@ public class BaseDao<T> {
         return dataSource;
     }
 
-    public int getID(String table_name){
-        if (StringUtil.isNullOrEmpty(table_name)) throw new MyException(CS.INVALID_PARAMS, "tableName为空");
-        int id = queryForInt(" SELECT get_id('"+table_name.trim()+"') ");
-        if(id == 0) throw new MyException(CS.INVALID_PARAMS, "没有此table_name->" + table_name);
-        return id;
+    public long getID(){
+        return twitterIDGenerator.nextId();
     }
     // uuid
     public String getUUID() {
@@ -144,6 +139,10 @@ public class BaseDao<T> {
      */
     public List<Map<String, Object>> queryForList(String sql, Map<String, Object> params) {
         return this.getNamedParameterJdbcTemplate().queryForList(sql, params);
+    }
+
+    public <T> List<T> queryForList(String sql, RowMapper<T> rowMapper) {
+        return this.getNamedParameterJdbcTemplate().query(sql, rowMapper);
     }
 
     /**

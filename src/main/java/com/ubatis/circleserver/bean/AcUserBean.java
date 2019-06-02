@@ -8,9 +8,9 @@ public class AcUserBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** id */ 
-    private int id;
+    private long id;
     /**  */ 
-    private int circle_id;
+    private long circle_id;
     /**  */ 
     private String openid;
     /**  */ 
@@ -37,10 +37,10 @@ public class AcUserBean implements Serializable {
     private String gmt_update;
 
     //getter
-    public int getId() { 
+    public long getId() { 
         return id;
     }
-    public int getCircle_id() { 
+    public long getCircle_id() { 
         return circle_id;
     }
     public String getOpenid() { 
@@ -81,10 +81,10 @@ public class AcUserBean implements Serializable {
     }
 
     //setter
-    public void setId(int id) { 
+    public void setId(long id) { 
         this.id = id;
     }
-    public void setCircle_id(int circle_id) { 
+    public void setCircle_id(long circle_id) { 
         this.circle_id = circle_id;
     }
     public void setOpenid(String openid) { 

@@ -8,7 +8,7 @@ public class AcCircleBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**  */ 
-    private int id;
+    private long id;
     /** 圈子编号 */ 
     private String circle_code;
     /** 圈子名称 */ 
@@ -19,7 +19,7 @@ public class AcCircleBean implements Serializable {
     private String gmt_update;
 
     //getter
-    public int getId() { 
+    public long getId() { 
         return id;
     }
     public String getCircle_code() { 
@@ -36,7 +36,7 @@ public class AcCircleBean implements Serializable {
     }
 
     //setter
-    public void setId(int id) { 
+    public void setId(long id) { 
         this.id = id;
     }
     public void setCircle_code(String circle_code) { 

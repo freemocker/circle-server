@@ -8,7 +8,7 @@ public class SysDictBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**  */ 
-    private int id;
+    private long id;
     /**  */ 
     private String category;
     /**  */ 
@@ -27,7 +27,7 @@ public class SysDictBean implements Serializable {
     private String gmt_update;
 
     //getter
-    public int getId() { 
+    public long getId() { 
         return id;
     }
     public String getCategory() { 
@@ -56,7 +56,7 @@ public class SysDictBean implements Serializable {
     }
 
     //setter
-    public void setId(int id) { 
+    public void setId(long id) { 
         this.id = id;
     }
     public void setCategory(String category) { 

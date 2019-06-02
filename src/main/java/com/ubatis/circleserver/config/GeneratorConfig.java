@@ -10,6 +10,24 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "gen-config")
 public class GeneratorConfig {
 
+    public GeneratorConfig() {
+    }
+
+    public GeneratorConfig(String normal_package_name, String normal_extend_class, String normal_prefix, String normal_suffix, String normal_out_dir, String param_package_name, String param_extend_class, String param_prefix, String param_suffix, String param_out_dir, String tablename_package, String tablename_path) {
+        this.normal_package_name = normal_package_name;
+        this.normal_extend_class = normal_extend_class;
+        this.normal_prefix = normal_prefix;
+        this.normal_suffix = normal_suffix;
+        this.normal_out_dir = normal_out_dir;
+        this.param_package_name = param_package_name;
+        this.param_extend_class = param_extend_class;
+        this.param_prefix = param_prefix;
+        this.param_suffix = param_suffix;
+        this.param_out_dir = param_out_dir;
+        this.tablename_package = tablename_package;
+        this.tablename_path = tablename_path;
+    }
+
     private String normal_package_name;
     private String normal_extend_class;
     private String normal_prefix;

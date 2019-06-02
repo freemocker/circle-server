@@ -9,19 +9,19 @@ public class ParamFnSharecarOrder extends MyParams implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** id */ 
-    private int id;
+    private long id;
     /**  */ 
-    private int circle_id;
+    private long circle_id;
     /**  */ 
     private String gmt_update;
     /**  */ 
     private String gmt_create;
 
     //getter
-    public int getId() { 
+    public long getId() { 
         return id;
     }
-    public int getCircle_id() { 
+    public long getCircle_id() { 
         return circle_id;
     }
     public String getGmt_update() { 
@@ -32,11 +32,11 @@ public class ParamFnSharecarOrder extends MyParams implements Serializable {
     }
 
     //setter
-    public void setId(int id) { 
+    public void setId(long id) { 
         put("id",id);
         this.id = id;
     }
-    public void setCircle_id(int circle_id) { 
+    public void setCircle_id(long circle_id) { 
         put("circle_id",circle_id);
         this.circle_id = circle_id;
     }

@@ -8,9 +8,9 @@ public class SysUserFormidBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**  */ 
-    private int id;
+    private long id;
     /**  */ 
-    private int user_id;
+    private long user_id;
     /**  */ 
     private String form_id;
     /**  */ 
@@ -19,10 +19,10 @@ public class SysUserFormidBean implements Serializable {
     private String gmt_update;
 
     //getter
-    public int getId() { 
+    public long getId() { 
         return id;
     }
-    public int getUser_id() { 
+    public long getUser_id() { 
         return user_id;
     }
     public String getForm_id() { 
@@ -36,10 +36,10 @@ public class SysUserFormidBean implements Serializable {
     }
 
     //setter
-    public void setId(int id) { 
+    public void setId(long id) { 
         this.id = id;
     }
-    public void setUser_id(int user_id) { 
+    public void setUser_id(long user_id) { 
         this.user_id = user_id;
     }
     public void setForm_id(String form_id) { 
