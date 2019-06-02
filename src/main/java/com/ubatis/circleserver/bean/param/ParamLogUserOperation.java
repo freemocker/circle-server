@@ -8,11 +8,17 @@ public class ParamLogUserOperation extends MyParams implements Serializable {
 	// id,user_id,operate_name,operate_remark,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /**  */ 
     private int id;
+    /**  */ 
     private int user_id;
+    /**  */ 
     private String operate_name;
+    /**  */ 
     private String operate_remark;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

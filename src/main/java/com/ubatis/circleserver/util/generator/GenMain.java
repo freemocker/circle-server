@@ -50,6 +50,33 @@ public class GenMain {
 		return ret;
 	}
 
+	public static String getJavaTypeName(String typeName) {
+		System.out.println("typeName = " + typeName);
+		String ret = null;
+		switch (typeName) {
+			case "INT":
+			case "TINYINT":
+			case "SMALLINT":
+			case "INTEGER":
+			case "BIGINT":
+				ret = "int";
+				break;
+
+			case "FLOAT":
+			case "REAL":
+			case "DOUBLE":
+			case "NUMERIC":
+			case "DECIMAL":
+				ret = "double";
+				break;
+
+			default:
+				ret = "String";
+				break;
+		}
+		return ret;
+	}
+
 	public static Connection getConnection() throws Exception {
 
 		if (mConn != null && !mConn.isClosed())
@@ -75,7 +102,7 @@ public class GenMain {
 			// System.out.println("表："+rowData.get("TABLE_NAME") + " - " + rowData.get("TABLE_COMMENT"));
 			tableNameList.add(rowData);
 		}
-		System.out.println(JsonUtil.toJson(tableNameList));
+		// System.out.println(JsonUtil.toJson(tableNameList));
 		return tableNameList;
 	}
 
@@ -87,21 +114,15 @@ public class GenMain {
 			//
 			for (Map<String, Object> tableMap : tables) {
 				List<GenFieldBean> fieldList = new ArrayList<>();// 一个表的
-				Statement statement = getConnection().createStatement();
 				ResultSet resultSet = null;
 				try {
-					resultSet = statement.executeQuery("SELECT * from " + tableMap.get("TABLE_NAME") + " LIMIT 1 ");
+					resultSet = getConnection().getMetaData().getColumns(null, getSchema(),tableMap.get("TABLE_NAME").toString(), "%");
 				} catch (SQLSyntaxErrorException e) {
-					System.out.println(tableMap + "不存在");
+					System.out.println(tableMap.get("TABLE_NAME") + "不存在");
 					continue;
 				}
-				ResultSetMetaData metaData = resultSet.getMetaData();
-				for (int i = 0; i < metaData.getColumnCount(); i++) {
-					// resultSet 数据下标从1开始
-					String columnName = metaData.getColumnName(i + 1);
-					int type = metaData.getColumnType(i + 1);
-					GenFieldBean fieldBean = new GenFieldBean(columnName,	getJavaTypeName(type));
-					// System.out.print(" "+columnName + " " + getJavaTypeName(type));
+				while (resultSet.next()) {
+					GenFieldBean fieldBean = new GenFieldBean(resultSet.getString("COLUMN_NAME"), resultSet.getString("REMARKS"), getJavaTypeName(resultSet.getString("TYPE_NAME")));
 					fieldList.add(fieldBean);
 				}
 				// 获取一个表
@@ -116,6 +137,15 @@ public class GenMain {
 			e.printStackTrace();
 		}
 
+	}
+
+	private static String getSchema() throws Exception {
+		String schema;
+		schema = getConnection().getMetaData().getUserName();
+		if ((schema == null) || (schema.length() == 0)) {
+			throw new Exception("ORACLE数据库模式不允许为空");
+		}
+		return schema.toUpperCase().toString();
 	}
 
 	public static void genClassFiles(GenConfig genConfig, String tablename, List<GenFieldBean> fieldList) {
@@ -146,6 +176,7 @@ public class GenMain {
 		ret.append("    private static final long serialVersionUID = 1L;").append("\n");
 		ret.append("\n");
 		for (GenFieldBean fieldBean : fieldList) {
+			ret.append("    /** " + fieldBean.getComment() + " */ ").append("\n");
 			ret.append("    private " + fieldBean.getType() + " " + fieldBean.getName()).append(";").append("\n");
 		}
 		ret.append("\n");

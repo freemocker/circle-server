@@ -7,10 +7,15 @@ public class LogUserLoginBean implements Serializable {
 	// id,user_id,ip_address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /**  */ 
     private int id;
+    /** 登录id */ 
     private int user_id;
+    /**  */ 
     private String ip_address;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

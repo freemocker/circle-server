@@ -7,10 +7,15 @@ public class LogCircleLoginBean implements Serializable {
 	// id,circle_id,ip_address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /** id */ 
     private int id;
+    /** 登录的圈子账号id */ 
     private int circle_id;
+    /**  */ 
     private String ip_address;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

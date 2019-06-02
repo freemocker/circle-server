@@ -8,19 +8,33 @@ public class ParamAcUser extends MyParams implements Serializable {
 	// id,circle_id,openid,nickname,unionid,phone,wechat,gender,avatar,province,city,address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /** id */ 
     private int id;
+    /**  */ 
     private int circle_id;
+    /**  */ 
     private String openid;
+    /**  */ 
     private String nickname;
+    /**  */ 
     private String unionid;
+    /**  */ 
     private String phone;
+    /**  */ 
     private String wechat;
+    /**  */ 
     private int gender;
+    /**  */ 
     private String avatar;
+    /**  */ 
     private String province;
+    /**  */ 
     private String city;
+    /**  */ 
     private String address;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

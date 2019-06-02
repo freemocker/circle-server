@@ -8,9 +8,13 @@ public class ParamFnSharecarOrder extends MyParams implements Serializable {
 	// id,circle_id,gmt_update,gmt_create
     private static final long serialVersionUID = 1L;
 
+    /** id */ 
     private int id;
+    /**  */ 
     private int circle_id;
+    /**  */ 
     private String gmt_update;
+    /**  */ 
     private String gmt_create;
 
     //getter

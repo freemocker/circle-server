@@ -8,13 +8,21 @@ public class ParamAcCircleManager extends MyParams implements Serializable {
 	// id,circle_id,role,login_name,login_pwd,active_status,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /** id */ 
     private int id;
+    /**  */ 
     private int circle_id;
+    /** 角色 */ 
     private String role;
+    /** 登录名 */ 
     private String login_name;
+    /** 登录密码 */ 
     private String login_pwd;
+    /** 0未审核，1已审核，2禁用 */ 
     private int active_status;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

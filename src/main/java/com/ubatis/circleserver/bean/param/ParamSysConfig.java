@@ -8,7 +8,9 @@ public class ParamSysConfig extends MyParams implements Serializable {
 	// config_name,circle_id
     private static final long serialVersionUID = 1L;
 
+    /** 设置名称 */ 
     private String config_name;
+    /**  */ 
     private int circle_id;
 
     //getter

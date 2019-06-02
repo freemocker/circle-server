@@ -7,14 +7,23 @@ public class SysDictBean implements Serializable {
 	// id,category,key,value,value_type,sort,comment,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /**  */ 
     private int id;
+    /**  */ 
     private String category;
+    /**  */ 
     private String key;
+    /**  */ 
     private String value;
+    /**  */ 
     private String value_type;
+    /**  */ 
     private int sort;
+    /** 注释 */ 
     private String comment;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

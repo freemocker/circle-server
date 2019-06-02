@@ -7,10 +7,15 @@ public class AcCircleBean implements Serializable {
 	// id,circle_code,circle_name,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /**  */ 
     private int id;
+    /** 圈子编号 */ 
     private String circle_code;
+    /** 圈子名称 */ 
     private String circle_name;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter

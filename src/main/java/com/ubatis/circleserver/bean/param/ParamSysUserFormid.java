@@ -8,10 +8,15 @@ public class ParamSysUserFormid extends MyParams implements Serializable {
 	// id,user_id,form_id,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
+    /**  */ 
     private int id;
+    /**  */ 
     private int user_id;
+    /**  */ 
     private String form_id;
+    /**  */ 
     private String gmt_create;
+    /**  */ 
     private String gmt_update;
 
     //getter
