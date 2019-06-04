@@ -2,32 +2,15 @@ package com.ubatis.circleserver.modules.basic.controller;
 
 import com.ubatis.circleserver.bean.AcCircleBean;
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.config.SysConfig;
-import com.ubatis.circleserver.modules.basic.bean.SystemInfoBean;
 import com.ubatis.circleserver.modules.basic.dao.CommonDao;
-import com.ubatis.circleserver.modules.basic.service.CommonService;
-import com.ubatis.circleserver.util.DateUtil;
-import com.ubatis.circleserver.util.JsonUtil;
-import com.ubatis.circleserver.util.MyCache;
-import com.ubatis.circleserver.util.common.CM;
-import com.ubatis.circleserver.util.common.CS;
-import com.ubatis.circleserver.util.redis.MyRedisClient;
-import io.netty.util.internal.StringUtil;
+import com.ubatis.circleserver.util.daoutils.CM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.util.ClassUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.time.ZoneId;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

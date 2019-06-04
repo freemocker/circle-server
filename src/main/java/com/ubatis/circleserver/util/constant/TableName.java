@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.util.common;
+package com.ubatis.circleserver.util.constant;
 
 
 public class TableName {

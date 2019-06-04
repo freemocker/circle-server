@@ -2,7 +2,7 @@ package com.ubatis.circleserver.util.redis;
 
 import com.ubatis.circleserver.exception.MyException;
 import com.ubatis.circleserver.util.JsonUtil;
-import com.ubatis.circleserver.util.common.CS;
+import com.ubatis.circleserver.util.constant.CS;
 import com.ubatis.circleserver.util.token.LatestToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

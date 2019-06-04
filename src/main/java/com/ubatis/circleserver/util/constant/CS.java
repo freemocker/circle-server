@@ -1,7 +1,6 @@
-package com.ubatis.circleserver.util.common;
+package com.ubatis.circleserver.util.constant;
 
 /** Constance
- * Created by lance on 2017/4/26.
  */
 public class CS {
 

@@ -13,7 +13,7 @@ public class GeneratorConfig {
     public GeneratorConfig() {
     }
 
-    public GeneratorConfig(String normal_package_name, String normal_extend_class, String normal_prefix, String normal_suffix, String normal_out_dir, String param_package_name, String param_extend_class, String param_prefix, String param_suffix, String param_out_dir, String tablename_package, String tablename_path) {
+    public GeneratorConfig(String normal_package_name, String normal_extend_class, String normal_prefix, String normal_suffix, String normal_out_dir, String param_package_name, String param_extend_class, String param_prefix, String param_suffix, String param_out_dir, String constant_package, String constant_path) {
         this.normal_package_name = normal_package_name;
         this.normal_extend_class = normal_extend_class;
         this.normal_prefix = normal_prefix;
@@ -24,8 +24,8 @@ public class GeneratorConfig {
         this.param_prefix = param_prefix;
         this.param_suffix = param_suffix;
         this.param_out_dir = param_out_dir;
-        this.tablename_package = tablename_package;
-        this.tablename_path = tablename_path;
+        this.constant_package = constant_package;
+        this.constant_path = constant_path;
     }
 
     private String normal_package_name;
@@ -39,8 +39,8 @@ public class GeneratorConfig {
     private String param_prefix;
     private String param_suffix;
     private String param_out_dir;
-    private String tablename_package;
-    private String tablename_path;
+    private String constant_package;
+    private String constant_path;
 
     public String getNormal_package_name() {
         return normal_package_name;
@@ -122,19 +122,19 @@ public class GeneratorConfig {
         this.param_out_dir = param_out_dir;
     }
 
-    public String getTablename_package() {
-        return tablename_package;
+    public String getConstant_package() {
+        return constant_package;
     }
 
-    public void setTablename_package(String tablename_package) {
-        this.tablename_package = tablename_package;
+    public void setConstant_package(String constant_package) {
+        this.constant_package = constant_package;
     }
 
-    public String getTablename_path() {
-        return tablename_path;
+    public String getConstant_path() {
+        return constant_path;
     }
 
-    public void setTablename_path(String tablename_path) {
-        this.tablename_path = tablename_path;
+    public void setConstant_path(String constant_path) {
+        this.constant_path = constant_path;
     }
 }

@@ -25,10 +25,10 @@ public class BeanGenerator {
 	private String JDBC_PASSWORD;
 	@Value("${database.name}")
 	private String DATABASE_NAME;
-	@Value("${gen-config.tablename_package}")
-	private String TABLE_NAME_PAKCAGE;
-	@Value("${gen-config.tablename_path}")
-	private String TABLE_NAME_PATH;
+	@Value("${gen-config.constant_package}")
+	private String CONSTANT_PAKCAGE;
+	@Value("${gen-config.constant_path}")
+	private String CONSTANT_PATH;
 
 	@Value("${gen-config.normal_package_name}")
 	private String normal_package_name;
@@ -261,9 +261,13 @@ public class BeanGenerator {
 		writeFile(genConfig.getOutDir(), className, ret.toString());
 	}
 
+	/**
+	 * 生成表字段信息文件
+	 * @param tableNameList
+	 */
 	private void genTableName(List<Map<String, Object>> tableNameList) {
 		StringBuilder ret = new StringBuilder();
-		ret.append("package ").append(TABLE_NAME_PAKCAGE).append(";").append("\n").append("\n");
+		ret.append("package ").append(CONSTANT_PAKCAGE).append(";").append("\n").append("\n");
 		ret.append("\n");
 		ret.append("public class TableName {");
 		ret.append("\n");
@@ -275,7 +279,16 @@ public class BeanGenerator {
 		ret.append("\n");
 		ret.append("}");
 		// System.out.println(ret.toString());
-		writeFile(TABLE_NAME_PATH, "TableName", ret.toString());
+		writeFile(CONSTANT_PATH, "TableName", ret.toString());
+	}
+
+	/**
+	 * TODO
+	 * 生成字典文件
+	 */
+	private void genDICT() {
+
+
 	}
 
 	private void writeFile(String output, String className, String content) {

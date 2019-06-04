@@ -1,7 +1,8 @@
-package com.ubatis.circleserver.util.common;
+package com.ubatis.circleserver.util.daoutils;
 
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
+import com.ubatis.circleserver.util.constant.CS;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.ubatis.circleserver.util.token;
 
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.util.JsonUtil;
-import com.ubatis.circleserver.util.common.CS;
+import com.ubatis.circleserver.util.constant.CS;
 import com.ubatis.circleserver.util.redis.MyRedisClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

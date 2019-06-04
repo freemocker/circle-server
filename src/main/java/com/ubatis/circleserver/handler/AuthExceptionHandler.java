@@ -3,7 +3,7 @@ package com.ubatis.circleserver.handler;
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.exception.ValidException;
 import com.ubatis.circleserver.util.JsonUtil;
-import com.ubatis.circleserver.util.common.CS;
+import com.ubatis.circleserver.util.constant.CS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;

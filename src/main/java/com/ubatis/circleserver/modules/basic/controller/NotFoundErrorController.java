@@ -1,8 +1,8 @@
 package com.ubatis.circleserver.modules.basic.controller;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.util.common.CM;
-import com.ubatis.circleserver.util.common.CS;
+import com.ubatis.circleserver.util.constant.CS;
+import com.ubatis.circleserver.util.daoutils.CM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
