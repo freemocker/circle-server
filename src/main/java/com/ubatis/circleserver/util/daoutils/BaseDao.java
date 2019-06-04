@@ -141,10 +141,6 @@ public class BaseDao<T> {
         return this.getNamedParameterJdbcTemplate().queryForList(sql, params);
     }
 
-    public <T> List<T> queryForList(String sql, RowMapper<T> rowMapper) {
-        return this.getNamedParameterJdbcTemplate().query(sql, rowMapper);
-    }
-
     /**
      * 根据绑定变量及其绑定变量类型语句查询数据，返回格式为一个List，<br />
      * 其中包含若干个以数据库字段名作为key,字段值作为value的Map,一行数据被封装成一个Map
@@ -167,6 +163,12 @@ public class BaseDao<T> {
     }
 
     //queryforlist by rowmapper
+    public <T> List<T> queryForList(String sql, RowMapper<T> rowMapper) {
+        return this.getNamedParameterJdbcTemplate().query(sql, rowMapper);
+    }
+    public <T> List<T> queryForList(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
+        return this.getNamedParameterJdbcTemplate().query(sql, params, rowMapper);
+    }
     //
 
     /**
@@ -210,6 +212,22 @@ public class BaseDao<T> {
     public Map<String, Object> queryForMap(String sql) {
         try {
             return this.getJdbcTemplate().queryForMap(sql);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 超过2个结果会报错
+     * @param sql
+     * @param params
+     * @param rowMapper
+     * @return
+     */
+    public T queryForObject(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
+        try {
+            return this.getNamedParameterJdbcTemplate().query(sql, params, rowMapper).get(0);
         } catch (Exception e){
             e.printStackTrace();
             return null;
@@ -270,24 +288,6 @@ public class BaseDao<T> {
         }
     }
 
-    public Map<String, Object> queryForObject(String sql, Map<String, Object> params) {
-        try {
-            return this.queryForList(sql, params).get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Map<String, Object> queryForObject(String sql) {
-        try {
-            return this.queryForList(sql).get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     /**
      * 得到分页sql
      *
@@ -317,12 +317,12 @@ public class BaseDao<T> {
      * @return 总记录数
      */
     public int getToealRecords(String sql) {
-        String countSql = "select count(1) from (" + sql + ") C ";
+        String countSql = "SELECT COUNT(1) FROM (" + sql + ") C ";
         return this.queryForInt(countSql);
     }
 
     public int getToealRecords(String sql, Map<String, Object> params) {
-        String countSql = "select count(1) from (" + sql + ") C ";
+        String countSql = "SELECT COUNT(1) FROM (" + sql + ") C ";
         return this.queryForInt(countSql, params);
     }
 
@@ -369,7 +369,7 @@ public class BaseDao<T> {
         currentPageNum = currentPageNum > totalPages ? totalPages : currentPageNum;
         page.setCurrentPageNum(currentPageNum);
         String pageSql = this.getPageSql(sql, page.getCurrentPageNum(), page.getPageSize());
-        List pagaDatas = this.queryForList(pageSql);
+        List pagaDatas = this.queryForList(pageSql, values, types);
         // 设置分页相关值
         page.setPageDatas(pagaDatas);
         page.setTotalRecords(totalRecords);
@@ -399,8 +399,7 @@ public class BaseDao<T> {
 
         int affectRows = 0;
         for (int i = 0; i < batchResult.length; i++) {
-            if (batchResult[i] > 0
-                    || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
+            if (batchResult[i] > 0 || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
                 affectRows += 1;
         }
 
@@ -420,8 +419,7 @@ public class BaseDao<T> {
 
         int affectRows = 0;
         for (int i = 0; i < batchResult.length; i++) {
-            if (batchResult[i] > 0
-                    || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
+            if (batchResult[i] > 0 || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
                 affectRows += 1;
         }
 
@@ -434,8 +432,7 @@ public class BaseDao<T> {
 
         int affectRows = 0;
         for (int i = 0; i < batchResult.length; i++) {
-            if (batchResult[i] > 0
-                    || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
+            if (batchResult[i] > 0 || batchResult[i] == PreparedStatement.SUCCESS_NO_INFO)
                 affectRows += 1;
         }
 
@@ -445,7 +442,7 @@ public class BaseDao<T> {
     /**
      * TODO 未完成。
      * 执行带参数的存储过程并返回结果。
-     * https://blog.csdn.net/qq_27888773/article/details/78493537
+     * ref: https://blog.csdn.net/qq_27888773/article/details/78493537
      * @param SQL call 存储过程语句(?,?,?),index从1开始
      * @param retNumber 结果数量
      * @param args 参数。和SQL里的问号对应
