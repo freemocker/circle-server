@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 小圈管理账号表 ac_circle_manager
+ */
 public class AcCircleManagerBean implements Serializable {
 
 	// id,circle_id,role,login_name,login_pwd,active_status,gmt_create,gmt_update

@@ -3,10 +3,15 @@ package com.ubatis.circleserver.bean.param;
 import java.io.Serializable;
 import com.ubatis.circleserver.bean.basic.MyParams;
 
+/**
+ * 拼车订单表 fn_sharecar_order
+ */
 public class ParamFnSharecarOrder extends MyParams implements Serializable {
 
 	// id,circle_id,gmt_update,gmt_create
     private static final long serialVersionUID = 1L;
+
+	public static final String BEAN_TABLE_NAME = "fn_sharecar_order";
 
     /** id */ 
     private long id;

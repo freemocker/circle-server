@@ -3,10 +3,15 @@ package com.ubatis.circleserver.bean.param;
 import java.io.Serializable;
 import com.ubatis.circleserver.bean.basic.MyParams;
 
+/**
+ *  log_user_operation
+ */
 public class ParamLogUserOperation extends MyParams implements Serializable {
 
 	// id,user_id,operate_name,operate_remark,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
+
+	public static final String BEAN_TABLE_NAME = "log_user_operation";
 
     /**  */ 
     private long id;

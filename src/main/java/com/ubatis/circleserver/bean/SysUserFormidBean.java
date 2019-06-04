@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 小程序模板消息通知豆表 sys_user_formid
+ */
 public class SysUserFormidBean implements Serializable {
 
 	// id,user_id,form_id,gmt_create,gmt_update

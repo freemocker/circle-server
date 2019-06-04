@@ -3,10 +3,15 @@ package com.ubatis.circleserver.bean.param;
 import java.io.Serializable;
 import com.ubatis.circleserver.bean.basic.MyParams;
 
+/**
+ * 小圈用户表 ac_user
+ */
 public class ParamAcUser extends MyParams implements Serializable {
 
 	// id,circle_id,openid,nickname,unionid,phone,wechat,gender,avatar,province,city,address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
+
+	public static final String BEAN_TABLE_NAME = "ac_user";
 
     /** id */ 
     private long id;

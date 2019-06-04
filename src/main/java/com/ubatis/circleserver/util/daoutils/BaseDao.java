@@ -1,6 +1,8 @@
 package com.ubatis.circleserver.util.daoutils;
 
+import com.ubatis.circleserver.bean.basic.MyParams;
 import com.ubatis.circleserver.bean.basic.Page;
+import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.util.TwitterIDGenerator;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,12 @@ import java.util.UUID;
 public class BaseDao<T> {
 
     @Autowired
+    private SysConfig sysConfig;
+
+    @Autowired
+    private HikariDataSource dataSource;
+
+    @Autowired
     private TwitterIDGenerator twitterIDGenerator;
 
     @Autowired
@@ -33,20 +41,39 @@ public class BaseDao<T> {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
-        return namedParameterJdbcTemplate;
+    public HikariDataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public TwitterIDGenerator getTwitterIDGenerator() {
+        return twitterIDGenerator;
+    }
+
+    public void setTwitterIDGenerator(TwitterIDGenerator twitterIDGenerator) {
+        this.twitterIDGenerator = twitterIDGenerator;
     }
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 
-    @Autowired
-    private HikariDataSource dataSource;
-
-    public HikariDataSource getDataSource() {
-        return dataSource;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
+
+    public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
+        return namedParameterJdbcTemplate;
+    }
+
+    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    // methods
 
     public long getID(){
         return twitterIDGenerator.nextId();
@@ -64,6 +91,12 @@ public class BaseDao<T> {
     public int insert(String sql, Map<String, Object> params) {
         return this.getNamedParameterJdbcTemplate().update(sql, params);
     }
+//    public int insert(MyParams tableObject, Map<String, Object> params) {
+//        String SQL = MysqlGenerator.insert
+//        return this.getNamedParameterJdbcTemplate().update(sql, params);
+//    }
+
+    // 获取自增id
     public int insert(String sql, Map<String, Object> params, String idname) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(params);

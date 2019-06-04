@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 系统配置表 sys_config
+ */
 public class SysConfigBean implements Serializable {
 
 	// id,circle_id,config_name,config_value

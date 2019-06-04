@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ *  log_user_operation
+ */
 public class LogUserOperationBean implements Serializable {
 
 	// id,user_id,operate_name,operate_remark,gmt_create,gmt_update

@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 系统字典表 sys_dict
+ */
 public class SysDictBean implements Serializable {
 
 	// id,category,key,value,value_type,sort,comment,gmt_create,gmt_update

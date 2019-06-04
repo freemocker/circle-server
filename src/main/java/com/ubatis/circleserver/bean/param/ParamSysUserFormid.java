@@ -3,10 +3,15 @@ package com.ubatis.circleserver.bean.param;
 import java.io.Serializable;
 import com.ubatis.circleserver.bean.basic.MyParams;
 
+/**
+ * 小程序模板消息通知豆表 sys_user_formid
+ */
 public class ParamSysUserFormid extends MyParams implements Serializable {
 
 	// id,user_id,form_id,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
+
+	public static final String BEAN_TABLE_NAME = "sys_user_formid";
 
     /**  */ 
     private long id;

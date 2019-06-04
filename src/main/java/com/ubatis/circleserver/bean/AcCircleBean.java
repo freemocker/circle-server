@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 小圈信息表 ac_circle
+ */
 public class AcCircleBean implements Serializable {
 
 	// id,circle_code,circle_name,gmt_create,gmt_update

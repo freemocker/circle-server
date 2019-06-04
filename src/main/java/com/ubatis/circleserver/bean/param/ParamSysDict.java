@@ -3,10 +3,15 @@ package com.ubatis.circleserver.bean.param;
 import java.io.Serializable;
 import com.ubatis.circleserver.bean.basic.MyParams;
 
+/**
+ * 系统字典表 sys_dict
+ */
 public class ParamSysDict extends MyParams implements Serializable {
 
 	// id,category,key,value,value_type,sort,comment,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
+
+	public static final String BEAN_TABLE_NAME = "sys_dict";
 
     /**  */ 
     private long id;

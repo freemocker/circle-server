@@ -1,10 +1,8 @@
 package com.ubatis.circleserver.util.generator;
 
 import com.ubatis.circleserver.config.GeneratorConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -169,7 +167,7 @@ public class BeanGenerator {
 					fieldList.add(fieldBean);
 				}
 				// 获取一个表
-				genClassFiles(genConfig, tableMap.get("TABLE_NAME").toString(), fieldList);
+				genClassFiles(genConfig, tableMap.get("TABLE_NAME").toString(), tableMap.get("TABLE_COMMENT").toString(), fieldList);
 			}
 			if (genConfig.isNormal()) {
 				// 生成TableName
@@ -191,9 +189,9 @@ public class BeanGenerator {
 		return schema.toUpperCase().toString();
 	}
 
-	private void genClassFiles(GenConfig genConfig, String tablename, List<GenFieldBean> fieldList) {
+	private void genClassFiles(GenConfig genConfig, String tableName, String tableComment, List<GenFieldBean> fieldList) {
 		String extendClass = genConfig.getExtendClass();
-		String className = GenUtil.toCamelName(genConfig.getPrefix() + GenUtil.firstLetterUpperCase(tablename)
+		String className = GenUtil.toCamelName(genConfig.getPrefix() + GenUtil.firstLetterUpperCase(tableName)
 				+ genConfig.getSuffix());
 		StringBuilder ret = new StringBuilder();
 		ret.append("package ").append(genConfig.getPackageName()).append(";").append("\n").append("\n");
@@ -203,6 +201,7 @@ public class BeanGenerator {
 			ret.append("\n");
 		}
 		ret.append("\n");
+		ret.append("/**").append("\n").append(" * ").append(tableComment).append(" ").append(tableName).append("\n */").append("\n");
 		ret.append("public class " + className);
 
 		if (!genConfig.isNormal()) {
@@ -218,6 +217,9 @@ public class BeanGenerator {
 		ret.append("\n");
 		ret.append("    private static final long serialVersionUID = 1L;").append("\n");
 		ret.append("\n");
+		if (!genConfig.isNormal()) {
+			ret.append("	public static final String BEAN_TABLE_NAME = \"").append(tableName).append("\";").append("\n\n");
+		}
 		for (GenFieldBean fieldBean : fieldList) {
 			ret.append("    /** " + fieldBean.getComment() + " */ ").append("\n");
 			ret.append("    private " + fieldBean.getType() + " " + fieldBean.getName()).append(";").append("\n");

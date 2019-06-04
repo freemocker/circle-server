@@ -2,6 +2,9 @@ package com.ubatis.circleserver.bean;
 
 import java.io.Serializable;
 
+/**
+ * 拼车订单表 fn_sharecar_order
+ */
 public class FnSharecarOrderBean implements Serializable {
 
 	// id,circle_id,gmt_update,gmt_create
