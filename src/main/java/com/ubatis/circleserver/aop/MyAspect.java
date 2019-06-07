@@ -85,7 +85,7 @@ public class MyAspect {
         HttpServletRequest request = attributes.getRequest();
         for(String param: params){
             if(StringUtils.isEmpty(request.getParameter(param.trim()))){
-                throw new ValidException(CS.MISS_PARAMS, param.trim());
+                throw new ValidException(CS.RETURN_CODE_MISS_PARAMETER, param.trim());
             }
         }
     }
@@ -106,13 +106,13 @@ public class MyAspect {
         String uid = request.getHeader("uid");
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(client_id)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 client_id");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 client_id");
         }
         if(StringUtils.isEmpty(uid)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 uid");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 uid");
         }
         if(StringUtils.isEmpty(token)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 token");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 token");
         }
         // 检查是否需要本人
         String uidkey = requireLatestToken.uidkey();
@@ -132,7 +132,7 @@ public class MyAspect {
         }
         LatestResult beforeLatestResult = latestTokenUtil.valid(client_id,uid,token);
         logger.info("beforeLatestResult:{}", beforeLatestResult.toString());
-        if(beforeLatestResult.getCode() != CS.SUCCESS){
+        if(beforeLatestResult.getCode() != CS.RETURN_CODE_SUCCESS){
             throw new ValidException(beforeLatestResult.getCode(),beforeLatestResult.getMsg());
         }
         JsonBase jsonBase = (JsonBase) jp.proceed();
@@ -163,14 +163,14 @@ public class MyAspect {
         String uid = request.getHeader("uid");
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(uid)){
-            throw new ValidException(CS.MISS_PARAMS, "uid");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "uid");
         }
         if(StringUtils.isEmpty(token)){
-            throw new ValidException(CS.MISS_PARAMS, "token");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "token");
         }
         oauthValidResult = oauthTokenUtil.valid(uid, token);
         logger.info("oauthValidResult:{}",oauthValidResult.getCode());
-        if(oauthValidResult.getCode() != CS.SUCCESS){
+        if(oauthValidResult.getCode() != CS.RETURN_CODE_SUCCESS){
             throw new ValidException(oauthValidResult.getCode(),oauthValidResult.getMsg());
         }
     }
@@ -191,22 +191,22 @@ public class MyAspect {
         String sign = request.getHeader("sign");
         String timestamp = request.getHeader("timestamp");
         if(StringUtils.isEmpty(uid)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 uid");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 uid");
         }
         if(StringUtils.isEmpty(sign)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 sign");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 sign");
         }
         if(StringUtils.isEmpty(timestamp)){
-            throw new ValidException(CS.MISS_PARAMS, "headers 缺少 timestamp");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 timestamp");
         }
         if(Math.abs(Integer.parseInt(timestamp) - DateUtil.getCurrentTimestamp()) > 60 * 20){
             //20分钟内
-            throw new ValidException(CS.SIGN_REQUEST_FAIL, "签名时间戳过期");
+            throw new ValidException(CS.RETURN_CODE_SIGNATURE_TIMEOUT, "签名时间戳过期");
         }
         // 检查是否需要本人
         String uidkey = requireSign.uidkey();
         if (!StringUtil.isNullOrEmpty(uidkey)) {
-            if (!uid.equals(request.getParameter(uidkey))) throw new ValidException(CS.NO_PERMISSION, "不是本人");
+            if (!uid.equals(request.getParameter(uidkey))) throw new ValidException(CS.RETURN_CODE_PERMISSION_DENIED, "不是本人");
         }
         // 检测 用户id是否合法。要包含staff表的
         if(!MyMapCache.getInstance().userIdSet.contains(uid)){
@@ -215,7 +215,7 @@ public class MyAspect {
             // logger.info("userMap: {}", userMap);
             // logger.info("staffMap: {}", staffMap);
             if(userMap == null && staffMap == null){
-                throw new ValidException(CS.INVALID_PARAMS, "用户 不存在");
+                throw new ValidException(CS.RETURN_CODE_INVALID_PARAMETER, "用户 不存在");
             }
             if(MyMapCache.getInstance().userIdSet.size() >= 1000000){
                 MyMapCache.getInstance().userIdSet.clear();
@@ -223,12 +223,12 @@ public class MyAspect {
             MyMapCache.getInstance().userIdSet.add(uid);
         }
         if (!MyMapCache.getInstance().userIdSet.contains(uid)) {
-            throw new ValidException(CS.INVALID_PARAMS, "非法uid");
+            throw new ValidException(CS.RETURN_CODE_INVALID_PARAMETER, "非法uid");
         }
         //
         boolean ret = mySignUtil.valid(sign, uid, timestamp);
         if(!ret){
-            throw new ValidException(CS.SIGN_REQUEST_FAIL, "签名错误");
+            throw new ValidException(CS.RETURN_CODE_SIGNATURE_INCORRECT, "签名错误");
         }
     }
 
@@ -249,11 +249,11 @@ public class MyAspect {
 
         String uid = request.getHeader("uid");
         if(StringUtils.isEmpty(uid)){
-            throw new ValidException(CS.MISS_PARAMS, "header 缺少 uid");
+            throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "header 缺少 uid");
         }
         // TODO 做一下缓存
         String rolesStr = null; // systemService.getRoles(uid);
-        if (StringUtil.isNullOrEmpty(rolesStr)) throw new ValidException(CS.NO_PERMISSION, "没有权限");
+        if (StringUtil.isNullOrEmpty(rolesStr)) throw new ValidException(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
         String[] userRoles = rolesStr.split(",");
 
         for (String userRole : userRoles) {
@@ -264,7 +264,7 @@ public class MyAspect {
             }
         }
 
-        throw new ValidException(CS.NO_PERMISSION, "没有权限");
+        throw new ValidException(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
     }
 
 }

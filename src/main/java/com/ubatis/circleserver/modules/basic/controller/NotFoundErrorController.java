@@ -23,9 +23,9 @@ public class NotFoundErrorController implements ErrorController {
     public JsonBase handleError(HttpServletRequest request){
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         if(statusCode == 404){
-            return CM.getFailInfo(CS.REQUEST_CONTENT_ERROR, "404 not found");
+            return CM.getFailInfo(CS.RETURN_CODE_TARGET_NOT_FOUND, "404 not found");
         }
-        return CM.getFailInfo(CS.UNKNOWN_ERROR, "statusCode: "+statusCode);
+        return CM.getFailInfo(CS.RETURN_CODE_UNKNOWN_ERROR, "statusCode: "+statusCode);
     }
 
     @Override

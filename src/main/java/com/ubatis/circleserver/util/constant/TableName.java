@@ -1,6 +1,8 @@
 package com.ubatis.circleserver.util.constant;
 
-
+/**
+ * 数据库表信息 (generate automatically, don't edit)
+ */
 public class TableName {
 
     /** 小圈信息表 */
@@ -20,7 +22,7 @@ public class TableName {
     /** 系统配置表 */
     public static final String SYS_CONFIG = "sys_config";
     /** 系统字典表 */
-    public static final String SYS_DICT = "sys_dict";
+    public static final String SYS_CS = "sys_cs";
     /** 小程序模板消息通知豆表 */
     public static final String SYS_USER_FORMID = "sys_user_formid";
 

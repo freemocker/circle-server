@@ -27,7 +27,7 @@ public class AuthExceptionHandler {
     public JsonBase handleUnCatchException(Exception ex){
         ex.printStackTrace();
         JsonBase jsonBase = new JsonBase();
-        jsonBase.setCode(CS.UNKNOWN_ERROR);
+        jsonBase.setCode(CS.RETURN_CODE_UNKNOWN_ERROR);
         jsonBase.setInfo(ex.getMessage());
         logger.error("统一错误处理:{}", JsonUtil.toJson(jsonBase));
         return  jsonBase;

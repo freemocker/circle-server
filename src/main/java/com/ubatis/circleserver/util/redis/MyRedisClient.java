@@ -175,7 +175,7 @@ public class MyRedisClient {
      */
     public LatestToken getListItem0(String key){
         String itemStr = getListItem(key, 0);
-        if (itemStr == null) throw new MyException(CS.TOKEN_INCORRECT, "找不到token");
+        if (itemStr == null) throw new MyException(CS.RETURN_CODE_TOKEN_INCORRECT, "找不到token");
         LatestToken latestToken = JsonUtil.fromJson(itemStr, LatestToken.class);
         return latestToken;
     }

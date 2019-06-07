@@ -1,43 +1,56 @@
 package com.ubatis.circleserver.util.constant;
 
-/** Constance
+/**
+ * 字典表 (generate automatically from sys_cs, don't edit)
  */
 public class CS {
 
-    //定义的返回码
-    /**成功*/
-    public static final int SUCCESS = 0;
-    /**未知错误*/
-    public static final int UNKNOWN_ERROR = -1000;
-    /**请求ua异常，请求失败*/
-    public static final int UA_REQUEST_FAIL = -1001;
-    /**请求缺少参数*/
-    public static final int MISS_PARAMS = -1002;
-    /**请求签名验证失败*/
-    public static final int SIGN_REQUEST_FAIL = -1003;
-    /**请求超时*/
-    public static final int REQUEST_OVER_TIME = -1004;
-    /**请求内容不正常-不存在*/
-    public static final int REQUEST_CONTENT_ERROR = -1005;
-    /**token不正确*/
-    public static final int TOKEN_INCORRECT = -1006;
-    /**token超时*/
-    public static final int TOKEN_OVER_TIME = -1007;
-    /**refresh token 不正确*/
-    public static final int REFRESHTOKEN_INCORRECT = -1008;
-    /**refresh token 超时*/
-    public static final int REFRESHTOKEN_OVER_TIME = -1009;
-    /**数据库错误*/
-    public static final int DB_FAIL = -1010;
-    /**重复*/
-    public static final int REPEAT = -1111;
-    /**参数格式错误*/
-    public static final int INVALID_PARAMS = -1212;
-    /**没有权限*/
-    public static final int NO_PERMISSION = -1213;
-    /**最新的token已过期*/
-    public static final int LATEST_TOKEN_EXPIRE_7_DAYS = -1214;
-    /**token已过期*/
-    public static final int LATEST_TOKEN_EXPIRE_2_HOURS = -1215;
+	// ========== 返回码 ==========
+    /** 成功 */
+    public static final int RETURN_CODE_SUCCESS = 0;
+    /** 未知错误 */
+    public static final int RETURN_CODE_UNKNOWN_ERROR = -1000;
+    /** 缺少参数 */
+    public static final int RETURN_CODE_MISS_PARAMETER = -1001;
+    /** 缺少header */
+    public static final int RETURN_CODE_MISS_HEADER = -1002;
+    /** 参数格式错误 */
+    public static final int RETURN_CODE_PARAMETER_FORMAT_INCORRECT = -1003;
+    /** header格式错误 */
+    public static final int RETURN_CODE_HEADER_FORMAT_INCORRECT = -1004;
+    /** 签名错误 */
+    public static final int RETURN_CODE_SIGNATURE_INCORRECT = -1005;
+    /** 签名超时 */
+    public static final int RETURN_CODE_SIGNATURE_TIMEOUT = -1006;
+    /** 请求超时 */
+    public static final int RETURN_CODE_REQUEST_TIMEOUT = -1007;
+    /** 目标找不到 */
+    public static final int RETURN_CODE_TARGET_NOT_FOUND = -1008;
+    /** token不正确 */
+    public static final int RETURN_CODE_TOKEN_INCORRECT = -1009;
+    /** token超时 */
+    public static final int RETURN_CODE_TOKEN_TIMEOUT = -1010;
+    /** refresh token不正确 */
+    public static final int RETURN_CODE_REFRESHTOKEN_INCORRECT = -1011;
+    /** refresh token 超时 */
+    public static final int RETURN_CODE_REFRESHTOKEN_TIMEOUT = -1012;
+    /** latest token 7天超时 */
+    public static final int RETURN_CODE_LATEST_TOKEN_EXPIRE_7_DAYS = -1013;
+    /** latest token 2小时超时 */
+    public static final int RETURN_CODE_LATEST_TOKEN_EXPIRE_2_HOURS = -1014;
+    /** 无效参数 */
+    public static final int RETURN_CODE_INVALID_PARAMETER = -1015;
+    /** 没有权限 */
+    public static final int RETURN_CODE_PERMISSION_DENIED = -1016;
+    /** 数据库发生错误 */
+    public static final int RETURN_CODE_DB_ERROR = -1017;
+    /** 重复 */
+    public static final int RETURN_CODE_REPEAT = -1111;
+
+	// ========== 拼车单状态 ==========
+    /** 进行中 */
+    public static final String SHARECAR_ORDER_STATUS_ING = "ING";
+    /** 已结束 */
+    public static final String SHARECAR_ORDER_STATUS_FINISH = "FINISH";
 
 }

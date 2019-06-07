@@ -1,6 +1,7 @@
 package com.ubatis.circleserver.util.generator;
 
 import com.ubatis.circleserver.config.GeneratorConfig;
+import com.ubatis.circleserver.util.constant.TableName;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.io.BufferedWriter;
@@ -50,12 +51,6 @@ public class BeanGenerator {
 	private String param_suffix;
 	@Value("${gen-config.param_out_dir}")
 	private String param_out_dir;
-	@Value("${gen-config.tablename_package}")
-	private String tablename_package;
-	@Value("${gen-config.tablename_path}")
-	private String tablename_path;
-
-
 
 	// 数据库连接
 	private Connection mConn = null;
@@ -170,8 +165,10 @@ public class BeanGenerator {
 				genClassFiles(genConfig, tableMap.get("TABLE_NAME").toString(), tableMap.get("TABLE_COMMENT").toString(), fieldList);
 			}
 			if (genConfig.isNormal()) {
-				// 生成TableName
+				// 生成TableName.java
 				genTableName(tables);
+				// 生成DICT.java
+				genDICT();
 			}
 		} catch (Exception e) {
 			System.out.println("出错");
@@ -268,7 +265,7 @@ public class BeanGenerator {
 	private void genTableName(List<Map<String, Object>> tableNameList) {
 		StringBuilder ret = new StringBuilder();
 		ret.append("package ").append(CONSTANT_PAKCAGE).append(";").append("\n").append("\n");
-		ret.append("\n");
+		ret.append("/**").append("\n").append(" * ").append("数据库表信息").append(" (generate automatically, don't edit)").append("\n */").append("\n");
 		ret.append("public class TableName {");
 		ret.append("\n");
 		ret.append("\n");
@@ -282,13 +279,68 @@ public class BeanGenerator {
 		writeFile(CONSTANT_PATH, "TableName", ret.toString());
 	}
 
+	private String getDICTValue(String typeName, String value) {
+		String ret = null;
+		switch (typeName) {
+			case "int":
+				ret = value;
+				break;
+			case "String":
+				ret = "\""+value+"\"";
+				break;
+			case "double":
+				ret = value;
+				break;
+			case "long":
+				ret = value;
+				break;
+		}
+		return ret;
+	}
+
 	/**
-	 * TODO
 	 * 生成字典文件
 	 */
 	private void genDICT() {
-
-
+		try {
+			List<Map<String, String>> rows = new ArrayList<>();
+			Statement statement = getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT a.* FROM (SELECT * FROM " + TableName.SYS_CS + " ORDER BY sort) a ORDER BY a.category");
+			while (resultSet.next()) {
+				Map<String, String> rowMap = new HashMap<>();
+				rowMap.put("category", resultSet.getString("category"));
+				rowMap.put("category_name", resultSet.getString("category_name"));
+				rowMap.put("key", resultSet.getString("key"));
+				rowMap.put("value", resultSet.getString("value"));
+				rowMap.put("value_type", resultSet.getString("value_type"));
+				rowMap.put("comment", resultSet.getString("comment"));
+				rows.add(rowMap);
+			}
+			//
+			StringBuilder ret = new StringBuilder();
+			ret.append("package ").append(CONSTANT_PAKCAGE).append(";").append("\n");
+			ret.append("\n");
+			ret.append("/**").append("\n").append(" * ").append("字典表").append(" (generate automatically from sys_cs, don't edit)").append("\n */").append("\n");
+			ret.append("public class CS {");
+			ret.append("\n");
+			String preCategory = null;
+			for (Map<String, String> row : rows) {
+				if (!row.get("category").equals(preCategory)) {
+					ret.append("\n");
+					ret.append("	// ========== ").append(row.get("category_name")).append(" ==========").append("\n");
+					preCategory = row.get("category");
+				}
+				ret.append("    /** " + row.get("comment") +" */").append("\n");
+				ret.append("    public static final " + row.get("value_type") + " " + row.get("category") + "_" + row.get("key") + " = " + getDICTValue(row.get("value_type"),row.get("value")) + ";").append("\n");
+			}
+			ret.append("\n");
+			ret.append("}");
+			// System.out.println(ret.toString());
+			writeFile(CONSTANT_PATH, "CS", ret.toString());
+		} catch (Exception e) {
+			System.out.println("出错");
+			e.printStackTrace();
+		}
 	}
 
 	private void writeFile(String output, String className, String content) {
@@ -325,9 +377,7 @@ public class BeanGenerator {
 				param_extend_class,
 				param_prefix,
 				param_suffix,
-				param_out_dir,
-				tablename_package,
-				tablename_path
+				param_out_dir
 		);
 		// 配置
 		GenConfig genConfigNormal = new GenConfig(true

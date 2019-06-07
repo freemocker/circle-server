@@ -3,17 +3,19 @@ package com.ubatis.circleserver.bean;
 import java.io.Serializable;
 
 /**
- * 系统字典表 sys_dict
+ * 系统字典表 sys_cs
  */
-public class SysDictBean implements Serializable {
+public class SysCsBean implements Serializable {
 
-	// id,category,key,value,value_type,sort,comment,gmt_create,gmt_update
+	// id,category,category_name,key,value,value_type,sort,comment,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
     /**  */ 
     private long id;
-    /**  */ 
+    /** 分类，大写英文 */ 
     private String category;
+    /** 分类名称，第一个写就行 */ 
+    private String category_name;
     /**  */ 
     private String key;
     /**  */ 
@@ -35,6 +37,9 @@ public class SysDictBean implements Serializable {
     }
     public String getCategory() { 
         return category;
+    }
+    public String getCategory_name() { 
+        return category_name;
     }
     public String getKey() { 
         return key;
@@ -64,6 +69,9 @@ public class SysDictBean implements Serializable {
     }
     public void setCategory(String category) { 
         this.category = category;
+    }
+    public void setCategory_name(String category_name) { 
+        this.category_name = category_name;
     }
     public void setKey(String key) { 
         this.key = key;
@@ -95,6 +103,7 @@ public class SysDictBean implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", category=").append(category);
+        sb.append(", category_name=").append(category_name);
         sb.append(", key=").append(key);
         sb.append(", value=").append(value);
         sb.append(", value_type=").append(value_type);

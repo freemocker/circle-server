@@ -116,11 +116,11 @@ public class OauthTokenUtil {
         long currentTimestamp = getCurrentTimestamp();
         String tokenbeanStr = redisClient.hmget(key, tokenStr);
         if(tokenbeanStr == null){
-            return new OauthValidResult(false, CS.TOKEN_INCORRECT, "token不正确");
+            return new OauthValidResult(false, CS.RETURN_CODE_TOKEN_INCORRECT, "token不正确");
         }
         TokenBean tokenBean = JsonUtil.fromJson(tokenbeanStr, TokenBean.class);
         if(tokenBean.getToken_expire() < getCurrentTimestamp()){
-            return new OauthValidResult(false, CS.TOKEN_OVER_TIME, "token超时");
+            return new OauthValidResult(false, CS.RETURN_CODE_TOKEN_TIMEOUT, "token超时");
         }
         if(tokenBean.getLast_token_timestamp() != today){
             //延迟refresh_token过期时间
@@ -129,7 +129,7 @@ public class OauthTokenUtil {
         }
         //存回去
         redisClient.hmset(key, tokenStr, JsonUtil.toJson(tokenBean));
-        return new OauthValidResult(true, CS.SUCCESS, "ok");
+        return new OauthValidResult(true, CS.RETURN_CODE_SUCCESS, "ok");
     }
 
     /**
@@ -145,14 +145,14 @@ public class OauthTokenUtil {
         long currentTimestamp = getCurrentTimestamp();
         String tokenbeanStr = redisClient.hmget(key, tokenStr);
         if(tokenbeanStr == null){
-            return new RefreshResult(CS.UA_REQUEST_FAIL, "id不对");
+            return new RefreshResult(CS.RETURN_CODE_INVALID_PARAMETER, "id不对");
         }
         TokenBean tokenBean = JsonUtil.fromJson(tokenbeanStr, TokenBean.class);
         if(!tokenBean.getRefresh_token().equals(refresh_token)){
-            return new RefreshResult(CS.REFRESHTOKEN_INCORRECT, "refresh_token 不正确");
+            return new RefreshResult(CS.RETURN_CODE_REFRESHTOKEN_INCORRECT, "refresh_token 不正确");
         }
         if(tokenBean.getRefresh_times() >= MAX_REFRESH_TIMES){
-            return new RefreshResult(CS.REFRESHTOKEN_OVER_TIME,"今日刷新次数过多");
+            return new RefreshResult(CS.RETURN_CODE_REFRESHTOKEN_TIMEOUT,"今日刷新次数过多");
         }
         //开始刷新
         String newTokenStr = getUUID();
@@ -172,7 +172,7 @@ public class OauthTokenUtil {
         redisClient.deleteField(key, tokenStr);
         //
         redisClient.hmset(key, newTokenStr, JsonUtil.toJson(tokenBean));
-        return new RefreshResult(CS.SUCCESS, tokenBean);
+        return new RefreshResult(CS.RETURN_CODE_SUCCESS, tokenBean);
     }
 
 }

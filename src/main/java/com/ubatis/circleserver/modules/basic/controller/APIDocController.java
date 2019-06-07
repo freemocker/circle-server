@@ -53,7 +53,7 @@ public class APIDocController {
             MyCache.getInstance().docKey = (String) commonDao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DOC_KEY' ").get("config_value");
         }
         logger.info("mDocKey :{}", MyCache.getInstance().docKey);
-        if (!MyCache.getInstance().docKey.equals(key)) return CM.getFailInfo(CS.NO_PERMISSION, "没有权限");
+        if (!MyCache.getInstance().docKey.equals(key)) return CM.getFailInfo(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
         if(MyCache.getInstance().apiDocs != null && MyCache.getInstance().apiDocs.size() > 0){
             return CM.getSuccessMsg(MyCache.getInstance().apiDocs,"api文档（缓存）");
         }
@@ -72,7 +72,7 @@ public class APIDocController {
         if (MyCache.getInstance().databaseDocKey == null) {
             MyCache.getInstance().databaseDocKey = (String) commonDao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DATABASE_DOC_KEY' ").get("config_value");
         }
-        if (!MyCache.getInstance().databaseDocKey.equals(key)) return CM.getFailInfo(CS.NO_PERMISSION, "没有权限");
+        if (!MyCache.getInstance().databaseDocKey.equals(key)) return CM.getFailInfo(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
         if(MyCache.getInstance().databaseDocs != null && MyCache.getInstance().databaseDocs.size() > 0){
             return CM.getSuccessMsg(MyCache.getInstance().databaseDocs,"数据库文档（缓存）");
         }

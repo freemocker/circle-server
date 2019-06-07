@@ -67,7 +67,7 @@ public class CommonController {
             runningStatus = p.waitFor();
         }catch (Exception e){
             e.printStackTrace();
-            return CM.getFailInfo(CS.INVALID_PARAMS, "文件不存在");
+            return CM.getFailInfo(CS.RETURN_CODE_INVALID_PARAMETER, "文件不存在");
         }
         logger.info("runningStatus:{}", runningStatus);
         return CM.getReturnInfo("runningStatus------->"+runningStatus);

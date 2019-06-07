@@ -82,26 +82,26 @@ public class LatestTokenUtil {
         long currentTimestamp = getCurrentTimestamp();
         //验证
         List<LatestToken> latestTokenList = redisClient.rangTokenBean(key);
-        if (latestTokenList.size() == 0) return new LatestResult(CS.TOKEN_INCORRECT, "token不存在");
+        if (latestTokenList.size() == 0) return new LatestResult(CS.RETURN_CODE_TOKEN_INCORRECT, "token不存在");
         if(latestTokenList.get(0).getToken().equals(token)){
             if(latestTokenList.get(0).getExpire() < currentTimestamp){
-                return new LatestResult(CS.LATEST_TOKEN_EXPIRE_7_DAYS,"全部token过期，请重新登录");
+                return new LatestResult(CS.RETURN_CODE_LATEST_TOKEN_EXPIRE_7_DAYS,"全部token过期，请重新登录");
             }
             //最新的话会返回一个新的
             LatestToken newToken = refreshLatestTokenList(key);
-            return new LatestResult(CS.SUCCESS, newToken);
+            return new LatestResult(CS.RETURN_CODE_SUCCESS, newToken);
         }
         for (int i = 1; i < latestTokenList.size(); i++) {
             if(latestTokenList.get(i).getToken().equals(token)){
                 if(latestTokenList.get(i).getExpire() > currentTimestamp){
-                    return new LatestResult(CS.SUCCESS,"valid ok");
+                    return new LatestResult(CS.RETURN_CODE_SUCCESS,"valid ok");
                 }else{
-                    return new LatestResult(CS.LATEST_TOKEN_EXPIRE_2_HOURS,"token 过期");
+                    return new LatestResult(CS.RETURN_CODE_LATEST_TOKEN_EXPIRE_2_HOURS,"token 过期");
                 }
             }
         }
         //都不对
-        return new LatestResult(CS.TOKEN_INCORRECT, "token不正确");
+        return new LatestResult(CS.RETURN_CODE_TOKEN_INCORRECT, "token不正确");
     }
 
     /**
