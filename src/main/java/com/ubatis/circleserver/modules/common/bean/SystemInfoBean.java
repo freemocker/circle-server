@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.modules.basic.bean;
+package com.ubatis.circleserver.modules.common.bean;
 
 /**
  * Created by lance on 2018/9/12.

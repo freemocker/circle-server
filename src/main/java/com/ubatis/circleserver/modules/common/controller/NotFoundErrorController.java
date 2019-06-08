@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.modules.basic.controller;
+package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.util.constant.CS;

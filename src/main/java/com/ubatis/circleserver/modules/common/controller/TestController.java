@@ -1,8 +1,8 @@
-package com.ubatis.circleserver.modules.basic.controller;
+package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.AcCircleBean;
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.modules.basic.dao.CommonDao;
+import com.ubatis.circleserver.modules.common.dao.CommonDao;
 import com.ubatis.circleserver.util.daoutils.CM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

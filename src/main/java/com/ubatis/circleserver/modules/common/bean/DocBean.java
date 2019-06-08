@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.modules.basic.bean;
+package com.ubatis.circleserver.modules.common.bean;
 
 import java.util.List;
 

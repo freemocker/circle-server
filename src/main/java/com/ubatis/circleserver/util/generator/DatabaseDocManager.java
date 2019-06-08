@@ -1,6 +1,6 @@
 package com.ubatis.circleserver.util.generator;
 
-import com.ubatis.circleserver.modules.basic.bean.DocBean;
+import com.ubatis.circleserver.modules.common.bean.DocBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.sql.*;

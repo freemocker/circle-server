@@ -1,8 +1,8 @@
-package com.ubatis.circleserver.modules.basic.controller;
+package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.modules.basic.bean.DocBean;
-import com.ubatis.circleserver.modules.basic.dao.CommonDao;
+import com.ubatis.circleserver.modules.common.bean.DocBean;
+import com.ubatis.circleserver.modules.common.dao.CommonDao;
 import com.ubatis.circleserver.util.MyCache;
 import com.ubatis.circleserver.util.constant.CS;
 import com.ubatis.circleserver.util.daoutils.CM;

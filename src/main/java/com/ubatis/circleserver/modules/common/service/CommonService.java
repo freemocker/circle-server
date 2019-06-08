@@ -1,6 +1,6 @@
-package com.ubatis.circleserver.modules.basic.service;
+package com.ubatis.circleserver.modules.common.service;
 
-import com.ubatis.circleserver.modules.basic.dao.CommonDao;
+import com.ubatis.circleserver.modules.common.dao.CommonDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

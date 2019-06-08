@@ -1,7 +1,7 @@
 package com.ubatis.circleserver.util;
 
 
-import com.ubatis.circleserver.modules.basic.bean.DocBean;
+import com.ubatis.circleserver.modules.common.bean.DocBean;
 
 import java.util.ArrayList;
 

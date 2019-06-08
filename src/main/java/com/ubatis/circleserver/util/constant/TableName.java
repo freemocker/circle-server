@@ -11,6 +11,10 @@ public class TableName {
     public static final String AC_CIRCLE_MANAGER = "ac_circle_manager";
     /** 小圈用户表 */
     public static final String AC_USER = "ac_user";
+    /**  */
+    public static final String AC_USER_CAR_INFO = "ac_user_car_info";
+    /**  */
+    public static final String FN_CAR_CHECK_ORDER = "fn_car_check_order";
     /** 拼车订单表 */
     public static final String FN_SHARECAR_ORDER = "fn_sharecar_order";
     /**  */

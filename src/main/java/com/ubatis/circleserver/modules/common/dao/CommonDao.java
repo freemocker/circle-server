@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.modules.basic.dao;
+package com.ubatis.circleserver.modules.common.dao;
 
 import com.ubatis.circleserver.util.daoutils.BaseDao;
 import org.springframework.stereotype.Repository;

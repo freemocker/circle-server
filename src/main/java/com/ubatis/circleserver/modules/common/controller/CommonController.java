@@ -1,10 +1,10 @@
-package com.ubatis.circleserver.modules.basic.controller;
+package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.config.SysConfig;
-import com.ubatis.circleserver.modules.basic.bean.SystemInfoBean;
-import com.ubatis.circleserver.modules.basic.dao.CommonDao;
-import com.ubatis.circleserver.modules.basic.service.CommonService;
+import com.ubatis.circleserver.modules.common.bean.SystemInfoBean;
+import com.ubatis.circleserver.modules.common.dao.CommonDao;
+import com.ubatis.circleserver.modules.common.service.CommonService;
 import com.ubatis.circleserver.util.DateUtil;
 import com.ubatis.circleserver.util.MyCache;
 import com.ubatis.circleserver.util.constant.CS;
