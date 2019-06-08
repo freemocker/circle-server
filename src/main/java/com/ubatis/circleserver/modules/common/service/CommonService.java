@@ -1,7 +1,5 @@
 package com.ubatis.circleserver.modules.common.service;
 
-import com.ubatis.circleserver.modules.common.dao.CommonDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,7 +8,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonService {
 
-    @Autowired
-    private CommonDao dao;
 
 }

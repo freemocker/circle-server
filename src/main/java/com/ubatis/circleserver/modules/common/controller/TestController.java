@@ -2,7 +2,7 @@ package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.AcCircleBean;
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.modules.common.dao.CommonDao;
+import com.ubatis.circleserver.util.daoutils.BaseDao;
 import com.ubatis.circleserver.util.daoutils.CM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +23,19 @@ public class TestController {
 
     private static Logger logger = LoggerFactory.getLogger(TestController.class);
     @Autowired
-    private CommonDao commonDao;
+    private BaseDao dao;
 
     @RequestMapping("/t")
     public JsonBase t(){
         String sql = " select id,circle_code,circle_name,gmt_create,gmt_update from ac_circle ";
-        List<Map<String, Object>> list = commonDao.queryForList(sql);
+        List<Map<String, Object>> list = dao.queryForList(sql);
 //        List<AcCircleBean> list2 = commonDao.getNamedParameterJdbcTemplate().queryForList(sql, new HashMap<>(),);
 //        List<Map<String, Object>> list2 = commonDao.getJdbcTemplate().queryForList(sql, new BeanPropertyRowMapper(AcCircleBean.class));
-        List<AcCircleBean> list2 = commonDao.queryForList(sql, new BeanPropertyRowMapper(AcCircleBean.class));
+        List<AcCircleBean> list2 = dao.queryForList(sql, new BeanPropertyRowMapper(AcCircleBean.class));
 //        return CM.getSuccessMsg(JsonUtil.getListFromHashMapList(list, AcCircleBean[].class), "aa");
         logger.info("date:{}", list2.get(0).getGmt_create());
         logger.error("e date:{}", list2.get(0).getGmt_create());
-        logger.info("id:{}", commonDao.getID());
+        logger.info("id:{}", dao.getID());
         return CM.getSuccessMsg(list2, "");
     }
 

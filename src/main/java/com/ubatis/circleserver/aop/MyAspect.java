@@ -6,10 +6,9 @@ import com.ubatis.circleserver.bean.basic.MyParams;
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.exception.ValidException;
 import com.ubatis.circleserver.util.DateUtil;
-import com.ubatis.circleserver.util.MyMapCache;
 import com.ubatis.circleserver.util.constant.CS;
 import com.ubatis.circleserver.util.constant.TableName;
-import com.ubatis.circleserver.util.daoutils.MyAopDao;
+import com.ubatis.circleserver.util.daoutils.BaseDao;
 import com.ubatis.circleserver.util.sign.MySignUtil;
 import com.ubatis.circleserver.util.token.*;
 import io.netty.util.internal.StringUtil;
@@ -51,8 +50,8 @@ public class MyAspect {
     private LatestTokenUtil latestTokenUtil;
     @Autowired
     private OauthTokenUtil oauthTokenUtil;
-     @Autowired
-     private MyAopDao dao;
+    @Autowired
+    private BaseDao dao;
 
     @Pointcut("execution(public * com.ubatis.circleserver.modules.*.controller.*.*(..))")
     public void pointcut() {

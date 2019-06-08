@@ -2,9 +2,9 @@ package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.modules.common.bean.DocBean;
-import com.ubatis.circleserver.modules.common.dao.CommonDao;
 import com.ubatis.circleserver.util.MyCache;
 import com.ubatis.circleserver.util.constant.CS;
+import com.ubatis.circleserver.util.daoutils.BaseDao;
 import com.ubatis.circleserver.util.daoutils.CM;
 import com.ubatis.circleserver.util.constant.TableName;
 import com.ubatis.circleserver.util.generator.DatabaseDocManager;
@@ -36,7 +36,7 @@ public class APIDocController {
     @Autowired
     private ResourceLoader resourceLoader;
     @Autowired
-    private CommonDao commonDao;
+    private BaseDao dao;
 
     // 数据库名
     @Value("${database.name}")
@@ -50,7 +50,7 @@ public class APIDocController {
     @RequestMapping("/api")
     public JsonBase getApiDocList(@RequestParam String key){
         if (MyCache.getInstance().docKey == null) {
-            MyCache.getInstance().docKey = (String) commonDao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DOC_KEY' ").get("config_value");
+            MyCache.getInstance().docKey = (String) dao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DOC_KEY' ").get("config_value");
         }
         logger.info("mDocKey :{}", MyCache.getInstance().docKey);
         if (!MyCache.getInstance().docKey.equals(key)) return CM.getFailInfo(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
@@ -70,7 +70,7 @@ public class APIDocController {
     @RequestMapping("/database")
     public JsonBase getDatabaseList(@RequestParam String key){
         if (MyCache.getInstance().databaseDocKey == null) {
-            MyCache.getInstance().databaseDocKey = (String) commonDao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DATABASE_DOC_KEY' ").get("config_value");
+            MyCache.getInstance().databaseDocKey = (String) dao.queryForMap(" select config_value from " + TableName.SYS_CONFIG + " where config_name = 'DATABASE_DOC_KEY' ").get("config_value");
         }
         if (!MyCache.getInstance().databaseDocKey.equals(key)) return CM.getFailInfo(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
         if(MyCache.getInstance().databaseDocs != null && MyCache.getInstance().databaseDocs.size() > 0){
@@ -82,7 +82,7 @@ public class APIDocController {
 
     private ArrayList<DocBean> getDatabaseDoc() {
         try {
-            return DatabaseDocManager.getDatabaseDoc(commonDao.getDataSource().getConnection(), database_name);
+            return DatabaseDocManager.getDatabaseDoc(dao.getDataSource().getConnection(), database_name);
         } catch (SQLException e) {
             e.printStackTrace();
         }

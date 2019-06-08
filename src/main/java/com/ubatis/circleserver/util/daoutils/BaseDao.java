@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.UUID;
  * spring jdbc temperate
  * ref: https://blog.csdn.net/u011179993/article/details/74791304
  */
+@Component
 public class BaseDao<T> {
 
     @Autowired

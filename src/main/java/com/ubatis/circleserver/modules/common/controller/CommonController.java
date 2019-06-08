@@ -3,11 +3,11 @@ package com.ubatis.circleserver.modules.common.controller;
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.modules.common.bean.SystemInfoBean;
-import com.ubatis.circleserver.modules.common.dao.CommonDao;
 import com.ubatis.circleserver.modules.common.service.CommonService;
 import com.ubatis.circleserver.util.DateUtil;
 import com.ubatis.circleserver.util.MyCache;
 import com.ubatis.circleserver.util.constant.CS;
+import com.ubatis.circleserver.util.daoutils.BaseDao;
 import com.ubatis.circleserver.util.daoutils.CM;
 import com.ubatis.circleserver.util.redis.MyRedisClient;
 import io.netty.util.internal.StringUtil;
@@ -36,7 +36,7 @@ public class CommonController {
     @Autowired
     private MyRedisClient myRedisClient;
     @Autowired
-    private CommonDao dao;
+    private BaseDao dao;
     @Autowired
     private CommonService commonService;
 

@@ -2,7 +2,7 @@ package com.ubatis.circleserver.modules.apps.service;
 
 import com.ubatis.circleserver.bean.basic.JsonBase;
 import com.ubatis.circleserver.bean.param.ParamAcUser;
-import com.ubatis.circleserver.modules.apps.dao.AppDao;
+import com.ubatis.circleserver.util.daoutils.BaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
     @Autowired
-    private AppDao appDao;
+    private BaseDao dao;
 
     public JsonBase addUser(ParamAcUser paramAcUser) {
-        paramAcUser.setId(appDao.getID());
+        paramAcUser.setId(dao.getID());
 //        paramAcUser.get
         return null;
     }
