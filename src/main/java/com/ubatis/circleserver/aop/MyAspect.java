@@ -8,6 +8,8 @@ import com.ubatis.circleserver.exception.ValidException;
 import com.ubatis.circleserver.util.DateUtil;
 import com.ubatis.circleserver.util.MyMapCache;
 import com.ubatis.circleserver.util.constant.CS;
+import com.ubatis.circleserver.util.constant.TableName;
+import com.ubatis.circleserver.util.daoutils.MyAopDao;
 import com.ubatis.circleserver.util.sign.MySignUtil;
 import com.ubatis.circleserver.util.token.*;
 import io.netty.util.internal.StringUtil;
@@ -27,7 +29,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Types;
 import java.util.Map;
 
 /** 验证切面
@@ -47,8 +51,8 @@ public class MyAspect {
     private LatestTokenUtil latestTokenUtil;
     @Autowired
     private OauthTokenUtil oauthTokenUtil;
-    // @Autowired
-    // private MyAopDao dao;
+     @Autowired
+     private MyAopDao dao;
 
     @Pointcut("execution(public * com.ubatis.circleserver.modules.*.controller.*.*(..))")
     public void pointcut() {
@@ -114,22 +118,8 @@ public class MyAspect {
         if(StringUtils.isEmpty(token)){
             throw new ValidException(CS.RETURN_CODE_MISS_HEADER, "headers 缺少 token");
         }
-        // 检查是否需要本人
-        String uidkey = requireLatestToken.uidkey();
-        if (!StringUtil.isNullOrEmpty(uidkey)) {
-            for (Object paramObj: jp.getArgs()) {
-                logger.info("===paramObj.getClass().getSimpleName()=={}", paramObj.getClass().getSimpleName());
-                if (paramObj instanceof MyParams) {
-                    Method[] methods = paramObj.getClass().getMethods();
-                    for (Method method: methods){
-                        if (method.getName().startsWith("set")
-                                && method.getName().substring(3).toLowerCase().equals(uidkey.toLowerCase())) {
-                            method.invoke(paramObj, uid);
-                        }
-                    }
-                }
-            }
-        }
+        // 把uid的值赋值给参数里的用户id，这样不用重复传
+        setUserIdForParameter(requireLatestToken.uidkey(), uid, jp);
         LatestResult beforeLatestResult = latestTokenUtil.valid(client_id,uid,token);
         logger.info("beforeLatestResult:{}", beforeLatestResult.toString());
         if(beforeLatestResult.getCode() != CS.RETURN_CODE_SUCCESS){
@@ -203,26 +193,23 @@ public class MyAspect {
             //20分钟内
             throw new ValidException(CS.RETURN_CODE_SIGNATURE_TIMEOUT, "签名时间戳过期");
         }
-        // 检查是否需要本人
-        String uidkey = requireSign.uidkey();
-        if (!StringUtil.isNullOrEmpty(uidkey)) {
-            if (!uid.equals(request.getParameter(uidkey))) throw new ValidException(CS.RETURN_CODE_PERMISSION_DENIED, "不是本人");
-        }
-        // 检测 用户id是否合法。要包含staff表的
-        if(!MyMapCache.getInstance().userIdSet.contains(uid)){
-            Map userMap = null;// dao.queryForMap("SELECT id FROM " + TableName.CRM_USER + " WHERE id = ? ", new Object[]{uid}, new int[]{Types.VARCHAR});
-            Map staffMap = null; // dao.queryForMap("SELECT id FROM " + TableName.SYS_STAFF + " WHERE id = ? ", new Object[]{uid}, new int[]{Types.VARCHAR});
-            // logger.info("userMap: {}", userMap);
-            // logger.info("staffMap: {}", staffMap);
-            if(userMap == null && staffMap == null){
+        // 把uid的值赋值给参数里的用户id，这样不用重复传
+        setUserIdForParameter(requireSign.uidkey(), uid, jp);
+        // 检测 用户id是否合法
+        if(!mySignUtil.userIdExist(uid)){
+            boolean userIdExist = dao.queryForInt(
+                    " SELECT ((SELECT COUNT(1) FROM "
+                    + TableName.AC_CIRCLE_MANAGER
+                    + " m WHERE 1 = 1 AND m.id = ?) + (SELECT COUNT(1) FROM "
+                    + TableName.AC_USER
+                    + " u WHERE 1 = 1 AND u.id = ?)) AS exist "
+                    , new Object[]{uid,uid}, new int[]{Types.BIGINT,Types.BIGINT}) > 0;
+            if(!userIdExist){
                 throw new ValidException(CS.RETURN_CODE_INVALID_PARAMETER, "用户 不存在");
             }
-            if(MyMapCache.getInstance().userIdSet.size() >= 1000000){
-                MyMapCache.getInstance().userIdSet.clear();
-            }
-            MyMapCache.getInstance().userIdSet.add(uid);
+            mySignUtil.setUserId(uid);// 7天有效
         }
-        if (!MyMapCache.getInstance().userIdSet.contains(uid)) {
+        if (!mySignUtil.userIdExist(uid)) {
             throw new ValidException(CS.RETURN_CODE_INVALID_PARAMETER, "非法uid");
         }
         //
@@ -265,6 +252,23 @@ public class MyAspect {
         }
 
         throw new ValidException(CS.RETURN_CODE_PERMISSION_DENIED, "没有权限");
+    }
+
+    private void setUserIdForParameter(String uidkey, String uid, JoinPoint jp) throws InvocationTargetException, IllegalAccessException {
+        if (!StringUtil.isNullOrEmpty(uidkey)) {
+            for (Object paramObj: jp.getArgs()) {
+                logger.info("===paramObj.getClass().getSimpleName()=={}", paramObj.getClass().getSimpleName());
+                if (paramObj instanceof MyParams) {
+                    Method[] methods = paramObj.getClass().getMethods();
+                    for (Method method: methods){
+                        if (method.getName().startsWith("set")
+                                && method.getName().substring(3).toLowerCase().equals(uidkey.toLowerCase())) {
+                            method.invoke(paramObj, uid);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.ubatis.circleserver.util.sign;
 
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.util.Md5Util;
+import com.ubatis.circleserver.util.redis.MyRedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +18,12 @@ import java.math.BigInteger;
 @Component
 public class MySignUtil {
 
+    private static final int expire_time = 7 * 24 * 3600;
+
     @Autowired
     private SysConfig sysConfig;
+    @Autowired
+    private MyRedisClient myRedisClient;
 
     /**
      * 签名校验
@@ -32,6 +37,14 @@ public class MySignUtil {
         String str1 = sysConfig.getSign_key() + user_id + (bigInteger.add(bigInteger));
         String sign = Md5Util.Md5(new StringBuilder(str1).reverse().toString());
         return sign.equals(clientSign);
+    }
+
+    public void setUserId(String userId) {
+        myRedisClient.setExpireKey(sysConfig.getApp_name() + ":uid:" + userId, "1", expire_time);
+    }
+
+    public boolean userIdExist(String userId) {
+        return myRedisClient.hasKey(sysConfig.getApp_name() + ":uid:" + userId);
     }
 
 }

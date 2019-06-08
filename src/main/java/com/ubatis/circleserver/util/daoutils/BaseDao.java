@@ -285,6 +285,15 @@ public class BaseDao<T> {
         }
     }
 
+    public int queryForInt(String sql, Object[] values,int[] valueTypes) {
+        try {
+            return this.getJdbcTemplate().queryForObject(sql, values, valueTypes, Integer.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public int queryForInt(String sql, Map<String, Object> params) {
         try {
             return this.getNamedParameterJdbcTemplate().queryForObject(sql, params, Integer.class);

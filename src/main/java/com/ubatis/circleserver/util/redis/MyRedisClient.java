@@ -58,7 +58,7 @@ public class MyRedisClient {
             BoundListOperations<String, String> ops = stringRedisTemplate.boundListOps(key);
             boundListOperationsHashMap.put(key, ops);
             if(boundListOperationsHashMap.size() > 1000){
-                int delindex = (int)(Math.random() * 999) + 1;//删除
+                int delindex = (int)(Math.random() * 999) + 1;// 删除
                 int count = 1;
                 for(String opskey: boundListOperationsHashMap.keySet()){
                     if(count == delindex){
@@ -213,4 +213,7 @@ public class MyRedisClient {
         return stringRedisTemplate.keys(key);
     }
 
+    public boolean hasKey(String key) {
+        return stringRedisTemplate.hasKey(key);
+    }
 }
