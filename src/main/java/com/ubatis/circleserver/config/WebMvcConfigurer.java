@@ -1,6 +1,6 @@
 package com.ubatis.circleserver.config;
 
-import com.ubatis.circleserver.handler.MyInputResolver;
+import com.ubatis.circleserver.handler.MyParameterResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -27,8 +27,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public MyInputResolver myInputResolver() {
-        return new MyInputResolver();
+    public MyParameterResolver myInputResolver() {
+        return new MyParameterResolver();
     }
 
 }

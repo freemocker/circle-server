@@ -14,9 +14,9 @@ import java.lang.reflect.Type;
 /**
  * Created by lance on 2017/10/17.
  */
-public class MyInputResolver implements HandlerMethodArgumentResolver {
+public class MyParameterResolver implements HandlerMethodArgumentResolver {
 
-    private final static Logger logger = LoggerFactory.getLogger(HandlerMethodArgumentResolver.class);
+    private final static Logger logger = LoggerFactory.getLogger(MyParameterResolver.class);
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
