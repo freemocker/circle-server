@@ -1,7 +1,7 @@
 package com.ubatis.circleserver.bean.param;
 
 import java.io.Serializable;
-import com.ubatis.circleserver.bean.basic.MyParams;
+import com.ubatis.circleserver.util.daoutils.MyParams;
 
 /**
  * 小程序模板消息通知豆表 sys_user_formid

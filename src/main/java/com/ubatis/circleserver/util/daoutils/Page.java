@@ -1,4 +1,4 @@
-package com.ubatis.circleserver.bean.basic;
+package com.ubatis.circleserver.util.daoutils;
 
 
 import java.io.Serializable;

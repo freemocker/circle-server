@@ -1,7 +1,5 @@
 package com.ubatis.circleserver.util.daoutils;
 
-import com.ubatis.circleserver.bean.basic.MyParams;
-import com.ubatis.circleserver.bean.basic.Page;
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.util.TwitterIDGenerator;
 import com.zaxxer.hikari.HikariDataSource;

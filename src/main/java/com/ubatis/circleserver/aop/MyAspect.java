@@ -2,7 +2,7 @@ package com.ubatis.circleserver.aop;
 
 import com.ubatis.circleserver.anno.*;
 import com.ubatis.circleserver.bean.basic.JsonBase;
-import com.ubatis.circleserver.bean.basic.MyParams;
+import com.ubatis.circleserver.util.daoutils.MyParams;
 import com.ubatis.circleserver.config.SysConfig;
 import com.ubatis.circleserver.exception.ValidException;
 import com.ubatis.circleserver.util.DateUtil;

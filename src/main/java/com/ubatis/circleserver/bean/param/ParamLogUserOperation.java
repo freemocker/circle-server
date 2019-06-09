@@ -1,7 +1,7 @@
 package com.ubatis.circleserver.bean.param;
 
 import java.io.Serializable;
-import com.ubatis.circleserver.bean.basic.MyParams;
+import com.ubatis.circleserver.util.daoutils.MyParams;
 
 /**
  *  log_user_operation

@@ -1,7 +1,7 @@
 package com.ubatis.circleserver.util;
 
 import com.google.gson.Gson;
-import com.ubatis.circleserver.bean.basic.MyParams;
+import com.ubatis.circleserver.util.daoutils.MyParams;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
