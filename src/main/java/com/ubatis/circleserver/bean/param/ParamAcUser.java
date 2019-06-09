@@ -11,7 +11,9 @@ public class ParamAcUser extends MyParams implements Serializable {
 	// id,circle_id,openid,nickname,unionid,phone,wechat,gender,avatar,province,city,address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "ac_user";
+	public ParamAcUser() {
+		this.BEAN_TABLE_NAME = "ac_user";
+	}
 
     /** id */ 
     private long id;

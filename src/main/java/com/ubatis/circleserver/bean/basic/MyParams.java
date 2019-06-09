@@ -1,5 +1,8 @@
 package com.ubatis.circleserver.bean.basic;
 
+import com.ubatis.circleserver.util.daoutils.BaseDao;
+import com.ubatis.circleserver.util.daoutils.MysqlGenerator;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +41,8 @@ public class MyParams {
 
     private int page;
     private int pagesize;
+    private BaseDao dao;
+    public String BEAN_TABLE_NAME;
 
     // 存参数键值对
     private Map<String, Object> params = new HashMap<>();
@@ -59,6 +64,18 @@ public class MyParams {
 
     public void setPagesize(int pagesize) {
         this.pagesize = pagesize;
+    }
+
+    public BaseDao getDao() {
+        return dao;
+    }
+
+    public void setDao(BaseDao dao) {
+        this.dao = dao;
+    }
+
+    public long getGenId() {
+        return this.dao.getID();
     }
 
     public Map<String, Object> getParams() {
@@ -132,6 +149,12 @@ public class MyParams {
     //获取页码
     public Page getOffsetPage() {
         return new Page((this.page - 1) * this.pagesize, this.pagesize);
+    }
+
+    public int save() {
+       String SQL = MysqlGenerator.allFieldsInsertSQL(this, BEAN_TABLE_NAME);
+       Map<String, Object> params = getParams();
+       return dao.insert(SQL, params);
     }
 
 }

@@ -11,7 +11,9 @@ public class ParamFnCarCheckOrder extends MyParams implements Serializable {
 	// id,channel,openid,phone,car_number,remark,confirmation,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "fn_car_check_order";
+	public ParamFnCarCheckOrder() {
+		this.BEAN_TABLE_NAME = "fn_car_check_order";
+	}
 
     /** id */ 
     private long id;

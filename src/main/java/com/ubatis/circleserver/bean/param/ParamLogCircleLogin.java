@@ -11,7 +11,9 @@ public class ParamLogCircleLogin extends MyParams implements Serializable {
 	// id,circle_id,ip_address,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "log_circle_login";
+	public ParamLogCircleLogin() {
+		this.BEAN_TABLE_NAME = "log_circle_login";
+	}
 
     /** id */ 
     private long id;

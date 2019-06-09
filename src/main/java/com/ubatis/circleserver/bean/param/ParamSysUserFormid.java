@@ -11,7 +11,9 @@ public class ParamSysUserFormid extends MyParams implements Serializable {
 	// id,user_id,form_id,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "sys_user_formid";
+	public ParamSysUserFormid() {
+		this.BEAN_TABLE_NAME = "sys_user_formid";
+	}
 
     /**  */ 
     private long id;

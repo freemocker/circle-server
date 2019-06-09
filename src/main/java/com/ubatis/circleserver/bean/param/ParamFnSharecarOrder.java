@@ -11,7 +11,9 @@ public class ParamFnSharecarOrder extends MyParams implements Serializable {
 	// id,circle_id,gmt_update,gmt_create
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "fn_sharecar_order";
+	public ParamFnSharecarOrder() {
+		this.BEAN_TABLE_NAME = "fn_sharecar_order";
+	}
 
     /** id */ 
     private long id;

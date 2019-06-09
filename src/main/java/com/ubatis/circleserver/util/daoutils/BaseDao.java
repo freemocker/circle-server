@@ -99,7 +99,7 @@ public class BaseDao<T> {
 //    }
 
     // 获取自增id
-    public int insert(String sql, Map<String, Object> params, String idname) {
+    public int insertAndGetId(String sql, Map<String, Object> params, String idname) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(params);
         getNamedParameterJdbcTemplate().update(sql,paramSource, keyHolder, new String[]{idname});

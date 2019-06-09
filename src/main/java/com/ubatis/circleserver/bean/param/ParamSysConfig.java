@@ -11,7 +11,9 @@ public class ParamSysConfig extends MyParams implements Serializable {
 	// id,circle_id,config_name,config_value
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "sys_config";
+	public ParamSysConfig() {
+		this.BEAN_TABLE_NAME = "sys_config";
+	}
 
     /**  */ 
     private long id;

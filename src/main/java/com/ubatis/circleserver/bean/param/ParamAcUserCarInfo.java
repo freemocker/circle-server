@@ -11,7 +11,9 @@ public class ParamAcUserCarInfo extends MyParams implements Serializable {
 	// id,user_id,car_brand,car_number,check_month,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "ac_user_car_info";
+	public ParamAcUserCarInfo() {
+		this.BEAN_TABLE_NAME = "ac_user_car_info";
+	}
 
     /**  */ 
     private long id;

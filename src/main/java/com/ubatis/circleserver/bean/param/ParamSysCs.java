@@ -11,7 +11,9 @@ public class ParamSysCs extends MyParams implements Serializable {
 	// id,category,category_name,key,value,value_type,sort,comment,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
-	public static final String BEAN_TABLE_NAME = "sys_cs";
+	public ParamSysCs() {
+		this.BEAN_TABLE_NAME = "sys_cs";
+	}
 
     /**  */ 
     private long id;

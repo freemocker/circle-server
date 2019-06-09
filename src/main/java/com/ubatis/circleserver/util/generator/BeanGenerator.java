@@ -215,7 +215,10 @@ public class BeanGenerator {
 		ret.append("    private static final long serialVersionUID = 1L;").append("\n");
 		ret.append("\n");
 		if (!genConfig.isNormal()) {
-			ret.append("	public static final String BEAN_TABLE_NAME = \"").append(tableName).append("\";").append("\n\n");
+			// ret.append("	public static final String BEAN_TABLE_NAME = \"").append(tableName).append("\";").append("\n\n");
+			ret.append("	public ").append(className).append("() {").append("\n");
+			ret.append("		this.BEAN_TABLE_NAME = ").append("\"").append(tableName).append("\";").append("\n");
+			ret.append("	}").append("\n\n");
 		}
 		for (GenFieldBean fieldBean : fieldList) {
 			ret.append("    /** " + fieldBean.getComment() + " */ ").append("\n");

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Types;
-import java.util.Map;
 
 /** 验证切面
  * Created by lance on 2017/4/21.
@@ -74,6 +73,8 @@ public class MyAspect {
         logger.info("ip={}", request.getRemoteAddr());
         logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         logger.info("args={}", joinPoint.getArgs());
+        // get MyParameter 注入dao
+        inputDao4MyParameter(joinPoint);
     }
 
     /**
@@ -266,6 +267,15 @@ public class MyAspect {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void inputDao4MyParameter(JoinPoint joinPoint) {
+        for (Object paramObj: joinPoint.getArgs()) {
+            // logger.info("===paramObj.getClass().getSimpleName()=={}", paramObj.getClass().getSimpleName());
+            if (paramObj instanceof MyParams) {
+                ((MyParams) paramObj).setDao(dao);
             }
         }
     }
