@@ -1,5 +1,7 @@
 package com.ubatis.circleserver.util.daoutils;
 
+import com.ubatis.circleserver.util.SpringUtil;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class MyParams {
 
     private int page;
     private int pagesize;
-    private BaseDao dao;
+    private BaseDao dao = (BaseDao) SpringUtil.getBean("baseDao");
     public String BEAN_TABLE_NAME;
 
     // 存参数键值对
@@ -67,10 +69,6 @@ public class MyParams {
 
     public BaseDao getDao() {
         return dao;
-    }
-
-    public void setDao(BaseDao dao) {
-        this.dao = dao;
     }
 
     public long getGenId() {
@@ -161,7 +159,7 @@ public class MyParams {
      * @param fields2input 需要插入的字段，逗号隔开
      * @return 相应sql，nameparameters 类型的。
      */
-    private String designateFieldsInsertSQL(MyParams params, String tablename, String fields2input) {
+    public String designateFieldsInsertSQL(MyParams params, String tablename, String fields2input) {
         String[] inputFields = fields2input.split(",");
         StringBuilder sql = new StringBuilder(" INSERT INTO " + tablename + " ( ");
         StringBuilder sqlfiles = new StringBuilder();
@@ -185,7 +183,7 @@ public class MyParams {
      * @param fieldsExcept
      * @return
      */
-    private String exceptFieldsInsertSQL(MyParams params, String tablename, String fieldsExcept) {
+    public String exceptFieldsInsertSQL(MyParams params, String tablename, String fieldsExcept) {
         List<String> filedsNotNull = params.getKeyList();
         StringBuilder sql = new StringBuilder(" INSERT INTO " + tablename + " ( ");
         StringBuilder sqlfiles = new StringBuilder();
@@ -209,7 +207,7 @@ public class MyParams {
      * @param tablename 表名。
      * @return
      */
-    private String allFieldsInsertSQL(MyParams params, String tablename) {
+    public String allFieldsInsertSQL(MyParams params, String tablename) {
         List<String> filedsNotNull = params.getKeyList();
         StringBuilder sql = new StringBuilder(" INSERT INTO " + tablename + " ( ");
         StringBuilder sqlfiles = new StringBuilder();
@@ -231,7 +229,7 @@ public class MyParams {
      * @param idname
      * @return
      */
-    private String allFieldsUpdateSQL(MyParams params, String tablename, String idname) {
+    public String allFieldsUpdateSQL(MyParams params, String tablename, String idname) {
         if(idname.contains(",")){
             return allFieldsUpdateSQL(params, tablename, idname.split(","));
         }
@@ -243,7 +241,7 @@ public class MyParams {
         sql.append(" WHERE " + idname + " = :" + idname.trim() + " ");
         return sql.toString();
     }
-    private String allFieldsUpdateSQL(MyParams params, String tablename, String[] ids) {
+    public String allFieldsUpdateSQL(MyParams params, String tablename, String[] ids) {
         List<String> filedsNotNull = params.getKeyList();
         StringBuilder sql = new StringBuilder(" UPDATE " + tablename + " SET " + ids[0].trim() + " = :" + ids[0].trim() + " ");
         for (String filed : filedsNotNull) {
@@ -255,7 +253,7 @@ public class MyParams {
         }
         return sql.toString();
     }
-    private String allFieldsUpdateSQL(MyParams params, String tablename) {
+    public String allFieldsUpdateSQL(MyParams params, String tablename) {
         return allFieldsUpdateSQL(params, tablename, getFirstFieldName(params));
     }
 
@@ -268,7 +266,7 @@ public class MyParams {
      * @param fields4input
      * @return
      */
-    private String designateFieldsUpdateSQL(MyParams params, String tablename, String idname, String fields4input) {
+    public String designateFieldsUpdateSQL(MyParams params, String tablename, String idname, String fields4input) {
         if(idname.contains(",")){
             return designateFieldsUpdateSQL(params, tablename, idname.split(","), fields4input);
         }
@@ -283,7 +281,7 @@ public class MyParams {
         return sql.toString();
     }
 
-    private String designateFieldsUpdateSQL(MyParams params, String tablename, String[] ids, String fields4input) {
+    public String designateFieldsUpdateSQL(MyParams params, String tablename, String[] ids, String fields4input) {
         String[] inputFields = fields4input.split(",");
         StringBuilder sql = new StringBuilder(" UPDATE " + tablename + " SET " + ids[0].trim() + " = :" + ids[0].trim() + " ");
         for (String filed : inputFields) {
@@ -298,7 +296,7 @@ public class MyParams {
         return sql.toString();
     }
 
-    private String designateFieldsUpdateSQL(MyParams params, String tablename, String fields4input) {
+    public String designateFieldsUpdateSQL(MyParams params, String tablename, String fields4input) {
         return designateFieldsUpdateSQL(params, tablename, getFirstFieldName(params), fields4input);
     }
 
@@ -311,7 +309,7 @@ public class MyParams {
      * @param fieldsExcept
      * @return
      */
-    private String exceptFieldsUpdateSQL(MyParams params, String tablename, String idname, String fieldsExcept) {
+    public String exceptFieldsUpdateSQL(MyParams params, String tablename, String idname, String fieldsExcept) {
         if(idname.contains(",")){
             return exceptFieldsUpdateSQL(params, tablename, idname.split(","), fieldsExcept);
         }
@@ -325,7 +323,7 @@ public class MyParams {
         sql.append(" WHERE " + idname + " = :" + idname.trim() + " ");
         return sql.toString();
     }
-    private String exceptFieldsUpdateSQL(MyParams params, String tablename, String[] ids, String fieldsExcept) {
+    public String exceptFieldsUpdateSQL(MyParams params, String tablename, String[] ids, String fieldsExcept) {
         List<String> filedsNotNull = params.getKeyList();
         StringBuilder sql = new StringBuilder(" UPDATE " + tablename + " SET " + ids[0].trim() + " = :" + ids[0].trim() + " ");
         for (String filed : filedsNotNull) {
@@ -339,7 +337,7 @@ public class MyParams {
         }
         return sql.toString();
     }
-    private String exceptFieldsUpdateSQL(MyParams params, String tablename, String fieldsExcept) {
+    public String exceptFieldsUpdateSQL(MyParams params, String tablename, String fieldsExcept) {
         return exceptFieldsUpdateSQL(params, tablename, getFirstFieldName(params), fieldsExcept);
     }
 
@@ -351,7 +349,7 @@ public class MyParams {
      * @param fields4search
      * @return
      */
-    private String designateFieldsSearchSQL(String fieldsout, String tablename, String fields4search) {
+    public String designateFieldsSearchSQL(String fieldsout, String tablename, String fields4search) {
         StringBuilder sql = new StringBuilder(" SELECT " + fieldsout + " FROM " + tablename + " WHERE 1=1 AND ( ");
         String[] fields = fields4search.split(",");
         for (int i = 0; i < fields.length; i++) {
@@ -368,7 +366,7 @@ public class MyParams {
      * @param ids4del
      * @return
      */
-    private String deleteSQL(MyParams params, String ids4del) {
+    public String deleteSQL(MyParams params, String ids4del) {
         String[] ids = ids4del.split(",");
         if(ids.length == 0) return "";
         StringBuilder sql = new StringBuilder(" DELETE FROM " + params.BEAN_TABLE_NAME + " WHERE " + ids[0] + " = :" + ids[0].trim() + " ");
@@ -384,7 +382,7 @@ public class MyParams {
      * @param allFields
      * @return
      */
-    private boolean isContainField(String testField, String allFields){
+    public boolean isContainField(String testField, String allFields){
         boolean isContain = false;
         String[] fields = allFields.split(",");
         for(String field: fields){
@@ -401,7 +399,7 @@ public class MyParams {
      * @param params
      * @return
      */
-    private String getFirstFieldName(MyParams params) {
+    public String getFirstFieldName(MyParams params) {
         for(Field field: params.getClass().getDeclaredFields()) {
             if (Modifier.isPrivate(field.getModifiers())) {
                 return field.getName();

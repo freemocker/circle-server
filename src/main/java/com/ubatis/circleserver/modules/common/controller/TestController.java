@@ -2,6 +2,7 @@ package com.ubatis.circleserver.modules.common.controller;
 
 import com.ubatis.circleserver.bean.AcCircleBean;
 import com.ubatis.circleserver.bean.basic.JsonBase;
+import com.ubatis.circleserver.bean.param.ParamAcUser;
 import com.ubatis.circleserver.util.daoutils.BaseDao;
 import com.ubatis.circleserver.util.daoutils.CM;
 import org.slf4j.Logger;
@@ -37,6 +38,15 @@ public class TestController {
         logger.error("e date:{}", list2.get(0).getGmt_create());
         logger.info("id:{}", dao.getID());
         return CM.getSuccessMsg(list2, "");
+    }
+
+    @RequestMapping("/p")
+    public JsonBase p(){
+        ParamAcUser paramAcUser = new ParamAcUser();
+        paramAcUser.setId(paramAcUser.getId());
+        paramAcUser.setCircle_id(1);
+        paramAcUser.setOpenid("xxxxx");
+        return CM.getReturnInfo(paramAcUser.save());
     }
 
 }
