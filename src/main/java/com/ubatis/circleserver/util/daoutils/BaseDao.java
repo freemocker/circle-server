@@ -1,6 +1,7 @@
 package com.ubatis.circleserver.util.daoutils;
 
 import com.ubatis.circleserver.config.SysConfig;
+import com.ubatis.circleserver.util.JsonUtil;
 import com.ubatis.circleserver.util.TwitterIDGenerator;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,6 +203,12 @@ public class BaseDao<T> {
     public <T> List<T> queryForList(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
         return this.getNamedParameterJdbcTemplate().query(sql, params, rowMapper);
     }
+    public <T> List<T> queryForList(String sql, Class<T[]> T) {
+        return JsonUtil.getListFromHashMapList(this.getJdbcTemplate().queryForList(sql), T);
+    }
+    public <T> List<T> queryForList(String sql, Map<String, Object> params,  Class<T[]> T) {
+        return JsonUtil.getListFromHashMapList(this.getNamedParameterJdbcTemplate().queryForList(sql, params), T);
+    }
     //
 
     /**
@@ -261,6 +268,15 @@ public class BaseDao<T> {
     public T queryForObject(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
         try {
             return this.getNamedParameterJdbcTemplate().query(sql, params, rowMapper).get(0);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public T queryForObject(String sql, Map<String, Object> params, Class<T> T) {
+        try {
+            return JsonUtil.fromMap(this.getNamedParameterJdbcTemplate().queryForMap(sql, params), T);
         } catch (Exception e){
             e.printStackTrace();
             return null;

@@ -401,7 +401,8 @@ public class MyParams {
      */
     public String getFirstFieldName(MyParams params) {
         for(Field field: params.getClass().getDeclaredFields()) {
-            if (Modifier.isPrivate(field.getModifiers())) {
+            // private 且 非 static字段
+            if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers())) {
                 return field.getName();
             }
         }

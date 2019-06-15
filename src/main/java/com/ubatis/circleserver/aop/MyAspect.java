@@ -200,7 +200,7 @@ public class MyAspect {
                     + TableName.AC_CIRCLE_MANAGER
                     + " m WHERE 1 = 1 AND m.id = ?) + (SELECT COUNT(1) FROM "
                     + TableName.AC_USER
-                    + " u WHERE 1 = 1 AND u.id = ?)) AS exist "
+                    + " u WHERE 1 = 1 AND u.openid = ?)) AS exist "
                     , new Object[]{uid,uid}, new int[]{Types.BIGINT,Types.BIGINT}) > 0;
             if(!userIdExist){
                 throw new ValidException(CS.RETURN_CODE_INVALID_PARAMETER, "用户 不存在");

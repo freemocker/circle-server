@@ -8,19 +8,17 @@ import com.ubatis.circleserver.util.daoutils.MyParams;
  */
 public class ParamAcUser extends MyParams implements Serializable {
 
-	// id,circle_id,openid,nickname,unionid,phone,wechat,gender,avatar,province,city,address,gmt_create,gmt_update
+	// openid,circle_id,nickname,unionid,phone,wechat,gender,avatar,province,city,address,login_times,login_code,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
 	public ParamAcUser() {
 		this.BEAN_TABLE_NAME = "ac_user";
 	}
 
-    /** id */ 
-    private long id;
-    /**  */ 
-    private long circle_id;
     /**  */ 
     private String openid;
+    /**  */ 
+    private long circle_id;
     /**  */ 
     private String nickname;
     /**  */ 
@@ -39,20 +37,21 @@ public class ParamAcUser extends MyParams implements Serializable {
     private String city;
     /**  */ 
     private String address;
+    /** 打开页面增加一次 */ 
+    private int login_times;
+    /** 微信登录的code，用于获取openid */ 
+    private String login_code;
     /**  */ 
     private String gmt_create;
     /**  */ 
     private String gmt_update;
 
     //getter
-    public long getId() { 
-        return id;
+    public String getOpenid() { 
+        return openid;
     }
     public long getCircle_id() { 
         return circle_id;
-    }
-    public String getOpenid() { 
-        return openid;
     }
     public String getNickname() { 
         return nickname;
@@ -81,6 +80,12 @@ public class ParamAcUser extends MyParams implements Serializable {
     public String getAddress() { 
         return address;
     }
+    public int getLogin_times() { 
+        return login_times;
+    }
+    public String getLogin_code() { 
+        return login_code;
+    }
     public String getGmt_create() { 
         return gmt_create;
     }
@@ -89,17 +94,13 @@ public class ParamAcUser extends MyParams implements Serializable {
     }
 
     //setter
-    public void setId(long id) { 
-        put("id",id);
-        this.id = id;
+    public void setOpenid(String openid) { 
+        put("openid",openid);
+        this.openid = openid;
     }
     public void setCircle_id(long circle_id) { 
         put("circle_id",circle_id);
         this.circle_id = circle_id;
-    }
-    public void setOpenid(String openid) { 
-        put("openid",openid);
-        this.openid = openid;
     }
     public void setNickname(String nickname) { 
         put("nickname",nickname);
@@ -137,6 +138,14 @@ public class ParamAcUser extends MyParams implements Serializable {
         put("address",address);
         this.address = address;
     }
+    public void setLogin_times(int login_times) { 
+        put("login_times",login_times);
+        this.login_times = login_times;
+    }
+    public void setLogin_code(String login_code) { 
+        put("login_code",login_code);
+        this.login_code = login_code;
+    }
     public void setGmt_create(String gmt_create) { 
         put("gmt_create",gmt_create);
         this.gmt_create = gmt_create;
@@ -152,9 +161,8 @@ public class ParamAcUser extends MyParams implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", circle_id=").append(circle_id);
         sb.append(", openid=").append(openid);
+        sb.append(", circle_id=").append(circle_id);
         sb.append(", nickname=").append(nickname);
         sb.append(", unionid=").append(unionid);
         sb.append(", phone=").append(phone);
@@ -164,6 +172,8 @@ public class ParamAcUser extends MyParams implements Serializable {
         sb.append(", province=").append(province);
         sb.append(", city=").append(city);
         sb.append(", address=").append(address);
+        sb.append(", login_times=").append(login_times);
+        sb.append(", login_code=").append(login_code);
         sb.append(", gmt_create=").append(gmt_create);
         sb.append(", gmt_update=").append(gmt_update);
         sb.append(", serialVersionUID=").append(serialVersionUID);

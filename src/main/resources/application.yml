@@ -29,7 +29,7 @@ gen-config:
   normal_out_dir: src/main/java/com/ubatis/circleserver/bean
   # 参数的
   param_package_name: com.ubatis.circleserver.bean.param
-  param_extend_class: com.ubatis.circleserver.bean.basic.MyParams
+  param_extend_class: com.ubatis.circleserver.util.daoutils.MyParams
   param_prefix: Param
   param_suffix:
   param_out_dir: src/main/java/com/ubatis/circleserver/bean/param

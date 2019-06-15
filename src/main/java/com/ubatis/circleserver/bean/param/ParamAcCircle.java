@@ -8,7 +8,7 @@ import com.ubatis.circleserver.util.daoutils.MyParams;
  */
 public class ParamAcCircle extends MyParams implements Serializable {
 
-	// id,circle_code,circle_name,gmt_create,gmt_update
+	// id,circle_name,circle_remark,ac_token_id,gmt_create,gmt_update
     private static final long serialVersionUID = 1L;
 
 	public ParamAcCircle() {
@@ -17,10 +17,12 @@ public class ParamAcCircle extends MyParams implements Serializable {
 
     /**  */ 
     private long id;
-    /** 圈子编号 */ 
-    private String circle_code;
     /** 圈子名称 */ 
     private String circle_name;
+    /** 备注 */ 
+    private String circle_remark;
+    /** sys_access_token.id */ 
+    private int ac_token_id;
     /**  */ 
     private String gmt_create;
     /**  */ 
@@ -30,11 +32,14 @@ public class ParamAcCircle extends MyParams implements Serializable {
     public long getId() { 
         return id;
     }
-    public String getCircle_code() { 
-        return circle_code;
-    }
     public String getCircle_name() { 
         return circle_name;
+    }
+    public String getCircle_remark() { 
+        return circle_remark;
+    }
+    public int getAc_token_id() { 
+        return ac_token_id;
     }
     public String getGmt_create() { 
         return gmt_create;
@@ -48,13 +53,17 @@ public class ParamAcCircle extends MyParams implements Serializable {
         put("id",id);
         this.id = id;
     }
-    public void setCircle_code(String circle_code) { 
-        put("circle_code",circle_code);
-        this.circle_code = circle_code;
-    }
     public void setCircle_name(String circle_name) { 
         put("circle_name",circle_name);
         this.circle_name = circle_name;
+    }
+    public void setCircle_remark(String circle_remark) { 
+        put("circle_remark",circle_remark);
+        this.circle_remark = circle_remark;
+    }
+    public void setAc_token_id(int ac_token_id) { 
+        put("ac_token_id",ac_token_id);
+        this.ac_token_id = ac_token_id;
     }
     public void setGmt_create(String gmt_create) { 
         put("gmt_create",gmt_create);
@@ -72,8 +81,9 @@ public class ParamAcCircle extends MyParams implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", circle_code=").append(circle_code);
         sb.append(", circle_name=").append(circle_name);
+        sb.append(", circle_remark=").append(circle_remark);
+        sb.append(", ac_token_id=").append(ac_token_id);
         sb.append(", gmt_create=").append(gmt_create);
         sb.append(", gmt_update=").append(gmt_update);
         sb.append(", serialVersionUID=").append(serialVersionUID);

@@ -23,6 +23,8 @@ public class TableName {
     public static final String LOG_USER_LOGIN = "log_user_login";
     /**  */
     public static final String LOG_USER_OPERATION = "log_user_operation";
+    /**  */
+    public static final String SYS_ACCESS_TOKEN = "sys_access_token";
     /** 系统配置表 */
     public static final String SYS_CONFIG = "sys_config";
     /** 系统字典表 */
